@@ -1049,14 +1049,23 @@ html[dir="rtl"] .form-group label {
         justify-content: center;
     }
     .floating-badge {
-        bottom: -20px;
-        right: 0;
-        left: 0;
-        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        bottom: -15px;
+        left: 10px;
+        right: auto;
+        margin: 0;
+        padding: 1rem;
     }
     html[dir="rtl"] .floating-badge {
-        left: 0;
-        right: 0;
+        right: 10px;
+        left: auto;
+    }
+    .floating-badge .badge-number {
+        font-size: 1.5rem;
+    }
+    .floating-badge .badge-text {
+        font-size: 0.6rem;
     }
 }
 
