@@ -2,14 +2,21 @@ import React from "react";
 import dbConnect from "@/lib/mongoose";
 import { Settings } from "@/models";
 
-export default async function DynamicStyles() {
-  await dbConnect();
-  const settingsData = await Settings.find({});
-  const settings = settingsData.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {});
+export const dynamic = 'force-dynamic';
 
-  const primaryColor = settings.primaryColor || "var(--color-primary)";
+export default async function DynamicStyles() {
+  let settings: any = {};
+  try {
+    await dbConnect();
+    const settingsData = await Settings.find({});
+    settings = settingsData.reduce((acc: any, item: any) => ({ ...acc, [item.key]: item.value }), {});
+  } catch (e) {
+    console.error("Failed to load settings:", e);
+  }
+
+  const primaryColor = settings.primaryColor || "#bd121c";
   const headingColor = settings.headingColor || "#ffffff";
-  const textColor = settings.textColor || "var(--color-text-muted)";
+  const textColor = settings.textColor || "#d1d5db";
   const fontFamily = settings.fontFamily || "Cairo";
 
   return (
