@@ -1048,6 +1048,12 @@ html[dir="rtl"] .form-group label {
     .about-buttons {
         justify-content: center;
     }
+    .about-features {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .about-features li {
         justify-content: center;
     }
