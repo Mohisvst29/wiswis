@@ -28,12 +28,22 @@ export default function ServicesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.imageUrl) {
+      alert("الرجاء رفع صورة للخدمة أولاً!");
+      return;
+    }
     setLoading(true);
-    await fetch(editingId ? `/api/services/${editingId}` : '/api/services', {
-      method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData)
-    });
-    setIsModalOpen(false);
-    fetchServices();
+    try {
+      const { _id, ...payload } = formData as any;
+      const res = await fetch(editingId ? `/api/services/${editingId}` : '/api/services', {
+        method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error();
+      setIsModalOpen(false);
+      fetchServices();
+    } catch (err) {
+      alert("حدث خطأ أثناء الحفظ! تأكد من اتصالك بالإنترنت.");
+    }
     setLoading(false);
   };
 

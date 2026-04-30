@@ -19,8 +19,15 @@ export default function BranchesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await fetch(editingId ? `/api/branches/${editingId}` : '/api/branches', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    setIsModalOpen(false); fetchBranches(); setLoading(false);
+    try {
+      const { _id, ...payload } = formData as any;
+      const res = await fetch(editingId ? `/api/branches/${editingId}` : '/api/branches', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error();
+      setIsModalOpen(false); fetchBranches();
+    } catch(err) {
+      alert("حدث خطأ أثناء الحفظ!");
+    }
+    setLoading(false);
   };
 
   const handleDelete = async (id: string) => { if (confirm('حذف؟')) { await fetch(`/api/branches/${id}`, { method: 'DELETE' }); fetchBranches(); } };

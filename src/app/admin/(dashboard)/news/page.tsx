@@ -27,9 +27,20 @@ export default function NewsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.imageUrl) {
+      alert("الرجاء رفع صورة للخبر أولاً!");
+      return;
+    }
     setLoading(true);
-    await fetch(editingId ? `/api/news/${editingId}` : '/api/news', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    setIsModalOpen(false); fetchNews(); setLoading(false);
+    try {
+      const { _id, ...payload } = formData as any;
+      const res = await fetch(editingId ? `/api/news/${editingId}` : '/api/news', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (!res.ok) throw new Error();
+      setIsModalOpen(false); fetchNews(); 
+    } catch(err) {
+      alert("حدث خطأ أثناء الحفظ! تأكد من اتصالك بالإنترنت.");
+    }
+    setLoading(false);
   };
 
   const handleDelete = async (id: string) => { if (confirm('حذف؟')) { await fetch(`/api/news/${id}`, { method: 'DELETE' }); fetchNews(); } };
