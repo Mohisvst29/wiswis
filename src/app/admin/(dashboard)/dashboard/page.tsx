@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Users, Layers, MapPin, MessageSquare, ArrowUpRight } from "lucide-react";
+import { Users, Layers, MapPin, MessageSquare, ArrowUpLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({ services: 0, branches: 0, messages: 0, news: 0 });
 
   useEffect(() => {
-    // Fetch real stats here in a real app
     const fetchStats = async () => {
       try {
         const [srv, br, msg, nw] = await Promise.all([
@@ -30,46 +29,63 @@ export default function DashboardPage() {
   }, []);
 
   const cards = [
-    { title: "Total Services", value: stats.services, icon: Layers, color: "text-blue-400", bg: "bg-blue-400/10", link: "/admin/services" },
-    { title: "Active Branches", value: stats.branches, icon: MapPin, color: "text-emerald-400", bg: "bg-emerald-400/10", link: "/admin/branches" },
-    { title: "Unread Messages", value: stats.messages, icon: MessageSquare, color: "text-amber-400", bg: "bg-amber-400/10", link: "/admin/messages" },
-    { title: "News Posts", value: stats.news, icon: Users, color: "text-purple-400", bg: "bg-purple-400/10", link: "/admin/news" },
+    { title: "إجمالي الخدمات", value: stats.services, icon: Layers, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-500/20", link: "/admin/services" },
+    { title: "المحطات النشطة", value: stats.branches, icon: MapPin, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-500/20", link: "/admin/branches" },
+    { title: "الرسائل الواردة", value: stats.messages, icon: MessageSquare, color: "text-amber-400", bg: "bg-amber-400/10", border: "border-amber-500/20", link: "/admin/messages" },
+    { title: "المقالات والأخبار", value: stats.news, icon: Users, color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-500/20", link: "/admin/news" },
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Dashboard Overview</h1>
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">مرحباً بك في لوحة الإدارة 👋</h1>
+          <p className="text-gray-400">إليك نظرة عامة على إحصائيات منصة وسوس</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {cards.map((card, i) => (
-          <div key={i} className="bg-gray-900 border border-gray-800 rounded-xl p-6 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${card.bg}`}>
-                <card.icon size={24} className={card.color} />
+          <div key={i} className={`bg-[#111] border ${card.border} rounded-2xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300 shadow-lg`}>
+            <div className="flex items-center justify-between mb-6">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${card.bg}`}>
+                <card.icon size={28} className={card.color} />
               </div>
-              <Link href={card.link} className="text-gray-500 hover:text-white transition-colors">
-                <ArrowUpRight size={20} />
+              <Link href={card.link} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-colors">
+                <ArrowUpLeft size={20} />
               </Link>
             </div>
             <div>
-              <p className="text-gray-400 text-sm font-medium">{card.title}</p>
-              <h3 className="text-3xl font-bold text-white mt-1">{card.value}</h3>
+              <h3 className="text-4xl font-bold text-white mb-2">{card.value}</h3>
+              <p className="text-gray-400 font-medium">{card.title}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-          <h3 className="text-lg font-bold text-white mb-4">Recent Activity</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-[#111] border border-white/5 rounded-2xl p-6 shadow-lg">
+          <h3 className="text-xl font-bold text-white mb-6">آخر النشاطات</h3>
           <div className="space-y-4">
-            <p className="text-gray-400 text-sm">Dashboard layout created successfully.</p>
-            <p className="text-gray-400 text-sm">Ready to manage the Wiswis platform.</p>
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <p className="text-gray-300 font-medium">تم تسجيل الدخول بنجاح إلى لوحة الإدارة</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-red-900/40 to-black border border-red-900/30 rounded-2xl p-6 shadow-lg relative overflow-hidden flex flex-col justify-center min-h-[200px]">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/assets/wiswis_hero.png')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+          <div className="relative z-10 text-center">
+            <h3 className="text-2xl font-bold text-white mb-2">النظام يعمل بكفاءة 🚀</h3>
+            <p className="text-red-200/80 mb-6 max-w-md mx-auto">جميع الواجهات البرمجية وقاعدة البيانات متصلة وتعمل بأعلى أداء.</p>
+            <Link href="/admin/settings" className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-lg shadow-red-900/50">
+              تخصيص المظهر <Paintbrush size={18} />
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 }
+import { Paintbrush } from "lucide-react";

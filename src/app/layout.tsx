@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LangProvider } from "@/components/LangProvider";
+import DynamicStyles from "@/components/DynamicStyles";
 
 export const metadata: Metadata = {
   title: "Wiswis Petroleum Services | وسوس لخدمات الوقود",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Inter:wght@400;500;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <DynamicStyles />
         <LangProvider>
           {children}
         </LangProvider>
