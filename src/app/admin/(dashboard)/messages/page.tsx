@@ -26,11 +26,11 @@ export default function MessagesPage() {
               <div key={msg._id} className={`p-6 transition-colors ${msg.isRead ? 'bg-white' : 'bg-slate-50'}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 text-white font-bold text-lg ${msg.isRead ? 'bg-slate-300' : 'bg-slate-900'}`}>{msg.name.charAt(0)}</div>
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 text-white font-bold text-lg ${msg.isRead ? 'bg-slate-300' : 'bg-[#7A0C16]'}`}>{msg.name.charAt(0)}</div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-3">
                         <h4 className={`text-base ${msg.isRead ? 'font-medium text-slate-700' : 'font-bold text-slate-900'}`}>{msg.name}</h4>
-                        {!msg.isRead && <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">جديد</span>}
+                        {!msg.isRead && <span className="bg-[#7A0C16] text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">جديد</span>}
                       </div>
                       <div className="flex gap-4 text-xs text-slate-500">
                         <span className="flex items-center gap-1.5"><Mail size={12}/> {msg.email}</span>

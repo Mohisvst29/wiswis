@@ -65,7 +65,7 @@ export default function DashboardPage() {
           <div className="p-6">
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 mt-2 rounded-full bg-slate-900"></div>
+                <div className="w-2 h-2 mt-2 rounded-full bg-[#7A0C16]"></div>
                 <div>
                   <p className="text-sm font-medium text-slate-900">تم تسجيل الدخول بنجاح</p>
                   <p className="text-xs text-slate-500">منذ دقائق</p>
