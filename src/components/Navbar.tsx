@@ -6,6 +6,7 @@ export default function Navbar() {
   const { lang, toggleLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [logo, setLogo] = useState('');
   const [siteName, setSiteName] = useState('Wiswis');
   const [phones, setPhones] = useState<string[]>(['0554460672', '0530783848']);
@@ -14,7 +15,19 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 992);
+      if (window.innerWidth > 992) {
+        setMenuOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    
+    // Initial check
+    handleResize();
     
     // Fetch settings for dynamic logo and phones
     fetch('/api/settings').then(r => r.json()).then(data => {
@@ -29,7 +42,10 @@ export default function Navbar() {
       }
     });
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [lang]);
 
   return (
@@ -43,22 +59,22 @@ export default function Navbar() {
           )}
         </div>
         
-        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: 'block', marginInlineStart: 'auto' }}>
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: isMobile ? 'block' : 'none', marginInlineStart: 'auto' }}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         
         <nav 
           className="nav-links" 
-          style={{ 
+          style={isMobile ? { 
             transform: menuOpen ? 'translateX(0)' : (lang === 'ar' ? 'translateX(100%)' : 'translateX(-100%)'),
             opacity: menuOpen ? 1 : 0,
             pointerEvents: menuOpen ? 'auto' : 'none',
             right: lang === 'ar' ? 0 : 'auto',
             left: lang === 'en' ? 0 : 'auto',
             transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
-          }}
+          } : undefined}
         >
-          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
+          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <a href="#" onClick={() => setMenuOpen(false)}>{t('nav_home')}</a>
