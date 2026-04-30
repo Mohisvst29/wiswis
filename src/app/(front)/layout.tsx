@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   description: "Integrated fuel and roadside services with global standards. حلول متكاملة لخدمات الوقود والطريق بمعايير عالمية.",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
