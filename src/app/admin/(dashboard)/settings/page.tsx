@@ -103,8 +103,11 @@ export default function SettingsPage() {
 
       <SectionCard title="4. بيانات التواصل" description="الأرقام والإيميلات لخدمة العملاء (لفصل أكثر من رقم أو إيميل، استخدم الفاصلة , )">
         <FormGrid>
-          <FormField label="رقم الجوال (مفصولة بفاصلة)">
+          <FormField label="رقم الجوال للاتصال (مفصولة بفاصلة)">
             <Input dir="ltr" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} placeholder="055..., 053..." />
+          </FormField>
+          <FormField label="رقم الواتساب (لطلب الخدمات)">
+            <Input dir="ltr" value={settings.whatsapp || ''} onChange={e => handleChange('whatsapp', e.target.value)} placeholder="9665..." />
           </FormField>
           <FormField label="البريد الإلكتروني (مفصولة بفاصلة)">
             <Input dir="ltr" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} placeholder="info@..., support@..." />

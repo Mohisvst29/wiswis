@@ -42,13 +42,17 @@ export default function Navbar() {
           )}
         </div>
         
+        <button className="mobile-menu-btn" onClick={() => document.querySelector('.nav-links')?.classList.toggle('active')}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        
         <nav className="nav-links">
-          <a href="#">{t('nav_home')}</a>
-          <a href="#about">{t('nav_about')}</a>
-          <a href="#services">{t('nav_services')}</a>
-          <a href="#branches">{t('nav_branches')}</a>
-          <a href="#news">{t('nav_news')}</a>
-          <a href="#contact">{t('nav_contact')}</a>
+          <a href="#" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_home')}</a>
+          <a href="#about" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_about')}</a>
+          <a href="#services" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_services')}</a>
+          <a href="#branches" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_branches')}</a>
+          <a href="#news" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_news')}</a>
+          <a href="#contact" onClick={() => document.querySelector('.nav-links')?.classList.remove('active')}>{t('nav_contact')}</a>
         </nav>
 
         <div className="nav-actions">

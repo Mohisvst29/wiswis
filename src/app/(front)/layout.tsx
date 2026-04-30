@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { LangProvider } from "@/components/LangProvider";
 import DynamicStyles from "@/components/DynamicStyles";
+import FloatingActions from "@/components/FloatingActions";
 
 export const metadata: Metadata = {
   title: "Wiswis Petroleum Services | وسوس لخدمات الوقود",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <DynamicStyles />
         <LangProvider>
           {children}
+          <FloatingActions />
         </LangProvider>
       </body>
     </html>
