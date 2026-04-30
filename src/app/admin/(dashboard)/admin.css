@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@layer base {
+  /* Prevent preflight from destroying frontend if leaked */
+  body {
+    margin: 0;
+  }
+}
