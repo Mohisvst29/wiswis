@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
+import connectDB from "@/lib/mongoose";
+import { Media } from "@/models";
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,10 +24,18 @@ export async function POST(request: NextRequest) {
       resource_type: resourceType,
     });
 
+    await connectDB();
+    const media = await Media.create({
+      url: result.secure_url,
+      publicId: result.public_id,
+      resourceType,
+    });
+
     return NextResponse.json({
       url: result.secure_url,
       publicId: result.public_id,
       resourceType,
+      media
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

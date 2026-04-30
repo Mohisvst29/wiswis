@@ -51,9 +51,17 @@ const SettingsSchema = new mongoose.Schema({
   value: { type: mongoose.Schema.Types.Mixed, required: true }
 }, { timestamps: true });
 
+const MediaSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  publicId: { type: String },
+  format: { type: String },
+  resourceType: { type: String }
+}, { timestamps: true });
+
 export const Service = mongoose.models.Service || mongoose.model('Service', ServiceSchema);
 export const Branch = mongoose.models.Branch || mongoose.model('Branch', BranchSchema);
 export const News = mongoose.models.News || mongoose.model('News', NewsSchema);
 export const Partner = mongoose.models.Partner || mongoose.model('Partner', PartnerSchema);
 export const ContactMessage = mongoose.models.ContactMessage || mongoose.model('ContactMessage', ContactMessageSchema);
 export const Settings = mongoose.models.Settings || mongoose.model('Settings', SettingsSchema);
+export const Media = mongoose.models.Media || mongoose.model('Media', MediaSchema);
