@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useLocale } from "@/hooks/useLocale";
+import { useLang } from "@/components/LangProvider";
 
 export default function Partners() {
-  const { locale, dir } = useLocale();
+  const { lang } = useLang();
   const [partners, setPartners] = useState<any[]>([]);
 
   useEffect(() => {
@@ -20,16 +20,16 @@ export default function Partners() {
   }, []);
 
   return (
-    <section className="py-20 bg-[#0a0a0a] relative overflow-hidden" id="partners" style={{ direction: dir }}>
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 mb-4 block">
-            {locale === 'ar' ? 'شركاء النجاح' : 'PARTNERS IN SUCCESS'}
+    <section id="partners" style={{ padding: '6rem 0', background: '#0a0a0a', position: 'relative', overflow: 'hidden', direction: lang === 'ar' ? 'rtl' : 'ltr' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#6b7280', display: 'block', marginBottom: '1rem' }}>
+            {lang === 'ar' ? 'شركاء النجاح' : 'PARTNERS IN SUCCESS'}
           </span>
-          <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mx-auto" />
+          <div style={{ width: '80px', height: '2px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent)', margin: '0 auto' }} />
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-30 hover:opacity-60 transition-opacity duration-500">
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '3rem', opacity: 0.8 }}>
           {partners.map((partner, i) => (
             <motion.div
               key={i}
@@ -37,12 +37,12 @@ export default function Partners() {
               whileInView={{ opacity: 1 }}
               whileHover={{ filter: "grayscale(0%)", scale: 1.1 }}
               viewport={{ once: true }}
-              className="h-12 md:h-16 flex items-center justify-center grayscale hover:grayscale-0 transition-all cursor-pointer"
+              style={{ height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s', cursor: 'pointer' }}
             >
               <img 
                 src={partner.logo} 
                 alt={partner.name} 
-                className="max-h-full max-w-[150px] object-contain invert"
+                style={{ maxHeight: '100%', maxWidth: '180px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
               />
             </motion.div>
           ))}

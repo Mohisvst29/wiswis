@@ -86,7 +86,13 @@ export default function Navbar() {
         </nav>
         
         <div className="nav-actions desktop-only" style={{ display: isMobile ? 'none' : 'block', justifySelf: 'end' }}>
-          <a href="#contact" className="btn btn-primary" style={{ padding: '0.6rem 2.2rem', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)' }}>أرسل لنا</a>
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('openContactModal'))} 
+            className="btn btn-primary" 
+            style={{ padding: '0.6rem 2.2rem', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)', border: 'none', cursor: 'pointer' }}
+          >
+            أرسل لنا
+          </button>
         </div>
       </div>
     </header>
