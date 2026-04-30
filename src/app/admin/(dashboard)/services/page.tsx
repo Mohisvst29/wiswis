@@ -67,105 +67,122 @@ export default function ServicesPage() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6 animate-in fade-in duration-200 pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">إدارة الخدمات</h1>
-          <p className="text-gray-400">أضف وعَدّل الخدمات التي تعرضها الشركة في الموقع.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">الخدمات</h2>
+          <p className="text-sm text-slate-500 mt-1">إدارة الخدمات التي تظهر في قسم الخدمات الرئيسي.</p>
         </div>
-        <button onClick={() => { setEditingId(null); setFormData({ titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', imageUrl: '', order: 0 }); setIsModalOpen(true); }} className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg shadow-red-900/20">
-          <Plus size={20} /> إضافة خدمة جديدة
+        <button onClick={() => { setEditingId(null); setFormData({ titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', imageUrl: '', order: 0 }); setIsModalOpen(true); }} className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors">
+          <Plus size={16} /> إضافة خدمة
         </button>
       </div>
 
-      <div className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden shadow-lg">
-        <table className="w-full text-right text-sm text-gray-400">
-          <thead className="text-xs text-gray-500 uppercase bg-[#161616] border-b border-white/5">
-            <tr>
-              <th className="px-6 py-4">الصورة التعبيرية</th>
-              <th className="px-6 py-4">اسم الخدمة</th>
-              <th className="px-6 py-4 text-left">إجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map((srv) => (
-              <tr key={srv._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="w-16 h-16 rounded-xl bg-black border border-white/10 overflow-hidden">
-                    <img src={srv.imageUrl || '/assets/wiswis_services.png'} alt="" className="w-full h-full object-cover" />
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="font-bold text-white text-base">{srv.titleAr}</div>
-                  <div className="text-gray-500 text-xs" dir="ltr">{srv.titleEn}</div>
-                </td>
-                <td className="px-6 py-4 text-left">
-                  <button onClick={() => openEdit(srv)} className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 p-2 rounded-lg transition-colors mx-1"><Edit2 size={18} /></button>
-                  <button onClick={() => handleDelete(srv._id)} className="text-red-400 hover:text-red-300 hover:bg-red-400/10 p-2 rounded-lg transition-colors mx-1"><Trash2 size={18} /></button>
-                </td>
-              </tr>
-            ))}
-            {services.length === 0 && (
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-right text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
               <tr>
-                <td colSpan={3} className="px-6 py-12 text-center text-gray-500">لا توجد خدمات مضافة.</td>
+                <th className="px-6 py-3 font-medium">الصورة</th>
+                <th className="px-6 py-3 font-medium">اسم الخدمة</th>
+                <th className="px-6 py-3 font-medium">الوصف</th>
+                <th className="px-6 py-3 font-medium text-left">إجراءات</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {services.map((srv) => (
+                <tr key={srv._id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="w-12 h-12 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center">
+                      {srv.imageUrl ? (
+                        <img src={srv.imageUrl} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <ImageIcon size={20} className="text-slate-400" />
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="font-semibold text-slate-900">{srv.titleAr}</div>
+                    <div className="text-slate-500 text-xs mt-0.5" dir="ltr">{srv.titleEn}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="truncate max-w-[200px] text-slate-600">{srv.descriptionAr}</div>
+                  </td>
+                  <td className="px-6 py-4 text-left">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => openEdit(srv)} className="text-slate-400 hover:text-slate-900 hover:bg-slate-100 p-1.5 rounded-md transition-colors"><Edit2 size={16} /></button>
+                      <button onClick={() => handleDelete(srv._id)} className="text-slate-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-md transition-colors"><Trash2 size={16} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {services.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-6 py-12 text-center text-slate-500">لا توجد خدمات مضافة. اضغط على الزر أعلاه لإضافة أول خدمة.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between p-6 border-b border-white/5">
-              <h2 className="text-2xl font-bold text-white">{editingId ? 'تعديل الخدمة' : 'إضافة خدمة'}</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5"><X size={24} /></button>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-xl animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <div className="space-y-1">
+                <h2 className="text-xl font-semibold text-slate-900">{editingId ? 'تعديل بيانات الخدمة' : 'إضافة خدمة جديدة'}</h2>
+                <p className="text-sm text-slate-500">أدخل تفاصيل الخدمة باللغتين العربية والإنجليزية.</p>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100"><X size={20} /></button>
             </div>
+            
             <div className="p-6 overflow-y-auto custom-scrollbar">
               <form id="serviceForm" onSubmit={handleSubmit} className="space-y-6">
-                
-                <div className="flex items-start gap-6 bg-white/5 p-4 rounded-xl border border-white/5">
-                  <div className="w-24 h-24 bg-black border border-white/10 rounded-xl overflow-hidden shrink-0 relative">
+                <div className="flex items-start gap-5">
+                  <div className="w-20 h-20 bg-slate-50 border border-slate-200 rounded-lg overflow-hidden shrink-0 relative flex items-center justify-center">
                     {formData.imageUrl ? (
                       <img src={formData.imageUrl} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-600"><ImageIcon size={32}/></div>
+                      <ImageIcon size={24} className="text-slate-400" />
                     )}
-                    {uploadingImage && <div className="absolute inset-0 bg-black/50 flex items-center justify-center"><div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div></div>}
+                    {uploadingImage && <div className="absolute inset-0 bg-white/80 flex items-center justify-center"><div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div></div>}
                   </div>
-                  <div className="flex-1 space-y-3">
-                    <p className="text-sm text-gray-300 font-medium">الصورة التعبيرية للخدمة</p>
-                    <label className="cursor-pointer bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
-                      <UploadCloud size={18} />
-                      رفع صورة من الجهاز
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">صورة الخدمة</label>
+                    <label className="cursor-pointer bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
+                      <UploadCloud size={16} /> رفع صورة
                       <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                     </label>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">اسم الخدمة (عربي)</label>
-                    <input required type="text" value={formData.titleAr} onChange={e => setFormData({...formData, titleAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500" />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">اسم الخدمة (عربي)</label>
+                    <input required type="text" value={formData.titleAr} onChange={e => setFormData({...formData, titleAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">اسم الخدمة (إنجليزي)</label>
-                    <input required type="text" dir="ltr" value={formData.titleEn} onChange={e => setFormData({...formData, titleEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" />
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">اسم الخدمة (إنجليزي)</label>
+                    <input required type="text" dir="ltr" value={formData.titleEn} onChange={e => setFormData({...formData, titleEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">وصف الخدمة (عربي)</label>
-                    <textarea required rows={4} value={formData.descriptionAr} onChange={e => setFormData({...formData, descriptionAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 resize-none"></textarea>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="text-sm font-medium text-slate-700 block">وصف الخدمة (عربي)</label>
+                    <textarea required rows={3} value={formData.descriptionAr} onChange={e => setFormData({...formData, descriptionAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all resize-none"></textarea>
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">وصف الخدمة (إنجليزي)</label>
-                    <textarea required rows={4} dir="ltr" value={formData.descriptionEn} onChange={e => setFormData({...formData, descriptionEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left resize-none"></textarea>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="text-sm font-medium text-slate-700 block">وصف الخدمة (إنجليزي)</label>
+                    <textarea required rows={3} dir="ltr" value={formData.descriptionEn} onChange={e => setFormData({...formData, descriptionEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left resize-none"></textarea>
                   </div>
                 </div>
               </form>
             </div>
-            <div className="p-6 border-t border-white/5 bg-[#161616] flex justify-end gap-4 rounded-b-2xl">
-              <button onClick={() => setIsModalOpen(false)} className="px-6 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 font-medium transition-colors">إلغاء</button>
-              <button form="serviceForm" type="submit" disabled={loading} className="bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-900/20 disabled:opacity-50">{loading ? 'جاري الحفظ...' : 'حفظ الخدمة'}</button>
+            
+            <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 rounded-b-xl">
+              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 text-sm font-medium transition-colors">إلغاء</button>
+              <button form="serviceForm" type="submit" disabled={loading} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all shadow-sm disabled:opacity-50">
+                {loading ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+              </button>
             </div>
           </div>
         </div>

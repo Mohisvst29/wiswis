@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, X, UploadCloud, Map as MapIcon } from "lucide-react";
+import { Plus, Edit2, Trash2, X, Map as MapIcon } from "lucide-react";
 
 export default function BranchesPage() {
   const [branches, setBranches] = useState<any[]>([]);
@@ -51,121 +51,142 @@ export default function BranchesPage() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6 animate-in fade-in duration-200 pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">إدارة المحطات والفروع</h1>
-          <p className="text-gray-400">أضف محطاتك وحدد موقعها على الخريطة ليتمكن العملاء من الوصول إليها.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">المحطات والفروع</h2>
+          <p className="text-sm text-slate-500 mt-1">إدارة المحطات، عناوينها، وإحداثيات الخريطة.</p>
         </div>
-        <button onClick={() => { setEditingId(null); setFormData({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', lat: 0, lng: 0, isActive: true }); setIsModalOpen(true); }} className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg shadow-red-900/20">
-          <Plus size={20} /> إضافة محطة جديدة
+        <button onClick={() => { setEditingId(null); setFormData({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', lat: 0, lng: 0, isActive: true }); setIsModalOpen(true); }} className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors">
+          <Plus size={16} /> إضافة محطة
         </button>
       </div>
 
-      <div className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden shadow-lg">
-        <table className="w-full text-right text-sm text-gray-400">
-          <thead className="text-xs text-gray-500 uppercase bg-[#161616] border-b border-white/5">
-            <tr>
-              <th className="px-6 py-4">اسم المحطة</th>
-              <th className="px-6 py-4">المنطقة / المدينة</th>
-              <th className="px-6 py-4">الخريطة</th>
-              <th className="px-6 py-4">الحالة</th>
-              <th className="px-6 py-4 text-left">إجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {branches.map((br) => (
-              <tr key={br._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="font-bold text-white text-base">{br.nameAr}</div>
-                  <div className="text-gray-500 text-xs" dir="ltr">{br.nameEn}</div>
-                </td>
-                <td className="px-6 py-4 font-medium">{br.cityAr}</td>
-                <td className="px-6 py-4">
-                  {br.mapUrl ? (
-                    <a href={br.mapUrl} target="_blank" className="text-red-400 hover:text-red-300 flex items-center gap-1"><MapIcon size={16}/> عرض</a>
-                  ) : <span className="text-gray-600">-</span>}
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${br.isActive ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
-                    {br.isActive ? 'تعمل حالياً' : 'مغلقة'}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-left">
-                  <button onClick={() => openEdit(br)} className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 p-2 rounded-lg transition-colors mx-1"><Edit2 size={18} /></button>
-                  <button onClick={() => handleDelete(br._id)} className="text-red-400 hover:text-red-300 hover:bg-red-400/10 p-2 rounded-lg transition-colors mx-1"><Trash2 size={18} /></button>
-                </td>
-              </tr>
-            ))}
-            {branches.length === 0 && (
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-right text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">لا توجد محطات مضافة.</td>
+                <th className="px-6 py-3 font-medium">اسم المحطة</th>
+                <th className="px-6 py-3 font-medium">المنطقة</th>
+                <th className="px-6 py-3 font-medium">الخريطة</th>
+                <th className="px-6 py-3 font-medium">الحالة</th>
+                <th className="px-6 py-3 font-medium text-left">إجراءات</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {branches.map((br) => (
+                <tr key={br._id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="font-semibold text-slate-900">{br.nameAr}</div>
+                    <div className="text-slate-500 text-xs mt-0.5" dir="ltr">{br.nameEn}</div>
+                  </td>
+                  <td className="px-6 py-4 text-slate-700">{br.cityAr}</td>
+                  <td className="px-6 py-4">
+                    {br.mapUrl ? (
+                      <a href={br.mapUrl} target="_blank" className="text-slate-500 hover:text-slate-900 flex items-center gap-1"><MapIcon size={16}/> عرض</a>
+                    ) : <span className="text-slate-400">-</span>}
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-medium ${br.isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
+                      {br.isActive ? 'نشط' : 'مغلق'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-left">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => openEdit(br)} className="text-slate-400 hover:text-slate-900 hover:bg-slate-100 p-1.5 rounded-md transition-colors"><Edit2 size={16} /></button>
+                      <button onClick={() => handleDelete(br._id)} className="text-slate-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-md transition-colors"><Trash2 size={16} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {branches.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-slate-500">لا توجد محطات مضافة.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between p-6 border-b border-white/5">
-              <h2 className="text-2xl font-bold text-white">{editingId ? 'تعديل المحطة' : 'إضافة محطة'}</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5"><X size={24} /></button>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-xl animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <div className="space-y-1">
+                <h2 className="text-xl font-semibold text-slate-900">{editingId ? 'تعديل المحطة' : 'إضافة محطة جديدة'}</h2>
+                <p className="text-sm text-slate-500">سجل بيانات وموقع المحطة.</p>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100"><X size={20} /></button>
             </div>
+            
             <div className="p-6 overflow-y-auto custom-scrollbar">
-              <form id="branchForm" onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">اسم المحطة (عربي)</label>
-                    <input required type="text" value={formData.nameAr} onChange={e => setFormData({...formData, nameAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500" placeholder="مثال: محطة السعادة" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">اسم المحطة (إنجليزي)</label>
-                    <input required type="text" dir="ltr" value={formData.nameEn} onChange={e => setFormData({...formData, nameEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" placeholder="Example: Al-Saada Station" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">المنطقة (عربي)</label>
-                    <input required type="text" value={formData.cityAr} onChange={e => setFormData({...formData, cityAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500" placeholder="مثال: الرياض" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">المنطقة (إنجليزي)</label>
-                    <input required type="text" dir="ltr" value={formData.cityEn} onChange={e => setFormData({...formData, cityEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" placeholder="Example: Riyadh" />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">تفاصيل المحطة والخدمات المتوفرة (عربي)</label>
-                    <input required type="text" value={formData.descAr} onChange={e => setFormData({...formData, descAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500" placeholder="بنزين 91، ديزل، سوبرماركت..." />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">تفاصيل المحطة والخدمات المتوفرة (إنجليزي)</label>
-                    <input required type="text" dir="ltr" value={formData.descEn} onChange={e => setFormData({...formData, descEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" placeholder="Benzene 91, Diesel, Supermarket..." />
-                  </div>
-                  <div className="md:col-span-2 border-t border-white/5 pt-6 mt-2">
-                    <h3 className="text-lg font-bold text-white mb-4">إعدادات الخريطة</h3>
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">رابط الخريطة (Google Maps URL)</label>
-                    <input type="text" dir="ltr" value={formData.mapUrl} onChange={e => setFormData({...formData, mapUrl: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" placeholder="https://goo.gl/maps/..." />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">خط العرض (Latitude)</label>
-                    <input type="number" step="any" dir="ltr" value={formData.lat} onChange={e => setFormData({...formData, lat: parseFloat(e.target.value)})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">خط الطول (Longitude)</label>
-                    <input type="number" step="any" dir="ltr" value={formData.lng} onChange={e => setFormData({...formData, lng: parseFloat(e.target.value)})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" />
-                  </div>
-                  
-                  <div className="md:col-span-2 flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/5">
-                    <input type="checkbox" id="isActive" checked={formData.isActive} onChange={e => setFormData({...formData, isActive: e.target.checked})} className="w-6 h-6 accent-red-600 rounded cursor-pointer" />
-                    <label htmlFor="isActive" className="text-white font-medium cursor-pointer">هذه المحطة تعمل حالياً وجاهزة لاستقبال العملاء</label>
+              <form id="branchForm" onSubmit={handleSubmit} className="space-y-8">
+                
+                <div className="space-y-6">
+                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">البيانات الأساسية</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">اسم المحطة (عربي)</label>
+                      <input required type="text" value={formData.nameAr} onChange={e => setFormData({...formData, nameAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">اسم المحطة (إنجليزي)</label>
+                      <input required type="text" dir="ltr" value={formData.nameEn} onChange={e => setFormData({...formData, nameEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">المنطقة (عربي)</label>
+                      <input required type="text" value={formData.cityAr} onChange={e => setFormData({...formData, cityAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">المنطقة (إنجليزي)</label>
+                      <input required type="text" dir="ltr" value={formData.cityEn} onChange={e => setFormData({...formData, cityEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="text-sm font-medium text-slate-700 block">تفاصيل الخدمات (عربي)</label>
+                      <input required type="text" value={formData.descAr} onChange={e => setFormData({...formData, descAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all" />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="text-sm font-medium text-slate-700 block">تفاصيل الخدمات (إنجليزي)</label>
+                      <input required type="text" dir="ltr" value={formData.descEn} onChange={e => setFormData({...formData, descEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
+                    </div>
                   </div>
                 </div>
+
+                <div className="w-full h-px bg-slate-100"></div>
+
+                <div className="space-y-6">
+                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">إحداثيات الخريطة</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="text-sm font-medium text-slate-700 block">رابط خرائط جوجل (Map URL)</label>
+                      <input type="text" dir="ltr" value={formData.mapUrl} onChange={e => setFormData({...formData, mapUrl: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" placeholder="https://goo.gl/maps/..." />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">خط العرض (Latitude)</label>
+                      <input type="number" step="any" dir="ltr" value={formData.lat} onChange={e => setFormData({...formData, lat: parseFloat(e.target.value)})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700 block">خط الطول (Longitude)</label>
+                      <input type="number" step="any" dir="ltr" value={formData.lng} onChange={e => setFormData({...formData, lng: parseFloat(e.target.value)})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  <input type="checkbox" id="isActive" checked={formData.isActive} onChange={e => setFormData({...formData, isActive: e.target.checked})} className="w-4 h-4 text-slate-900 bg-white border-slate-300 rounded focus:ring-slate-900" />
+                  <label htmlFor="isActive" className="text-sm font-medium text-slate-900 cursor-pointer">المحطة نشطة وتعمل حالياً</label>
+                </div>
+
               </form>
             </div>
-            <div className="p-6 border-t border-white/5 bg-[#161616] flex justify-end gap-4 rounded-b-2xl">
-              <button onClick={() => setIsModalOpen(false)} className="px-6 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 font-medium transition-colors">إلغاء</button>
-              <button form="branchForm" type="submit" disabled={loading} className="bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-900/20 disabled:opacity-50">{loading ? 'جاري الحفظ...' : 'حفظ المحطة'}</button>
+            
+            <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 rounded-b-xl">
+              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 text-sm font-medium transition-colors">إلغاء</button>
+              <button form="branchForm" type="submit" disabled={loading} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all shadow-sm disabled:opacity-50">
+                {loading ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+              </button>
             </div>
           </div>
         </div>

@@ -67,115 +67,130 @@ export default function NewsPage() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6 animate-in fade-in duration-200 pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">الأخبار والمقالات</h1>
-          <p className="text-gray-400">شارك أحدث أخبار وفعاليات الشركة.</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">الأخبار والمقالات</h2>
+          <p className="text-sm text-slate-500 mt-1">نشر الأخبار والفعاليات في الموقع.</p>
         </div>
-        <button onClick={() => { setEditingId(null); setFormData({ titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', imageUrl: '', isFeatured: false }); setIsModalOpen(true); }} className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg shadow-red-900/20">
-          <Plus size={20} /> نشر خبر جديد
+        <button onClick={() => { setEditingId(null); setFormData({ titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', imageUrl: '', isFeatured: false }); setIsModalOpen(true); }} className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors">
+          <Plus size={16} /> إضافة خبر
         </button>
       </div>
 
-      <div className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden shadow-lg">
-        <table className="w-full text-right text-sm text-gray-400">
-          <thead className="text-xs text-gray-500 uppercase bg-[#161616] border-b border-white/5">
-            <tr>
-              <th className="px-6 py-4">صورة الخبر</th>
-              <th className="px-6 py-4">العنوان</th>
-              <th className="px-6 py-4">التاريخ</th>
-              <th className="px-6 py-4">مميز</th>
-              <th className="px-6 py-4 text-left">إجراءات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {news.map((item) => (
-              <tr key={item._id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="w-20 h-12 rounded-lg bg-black border border-white/10 overflow-hidden">
-                    <img src={item.imageUrl || '/assets/wiswis_services.png'} alt="" className="w-full h-full object-cover" />
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="font-bold text-white text-base max-w-xs truncate">{item.titleAr}</div>
-                  <div className="text-gray-500 text-xs truncate max-w-xs" dir="ltr">{item.titleEn}</div>
-                </td>
-                <td className="px-6 py-4">{new Date(item.date).toLocaleDateString('ar-EG')}</td>
-                <td className="px-6 py-4">
-                  {item.isFeatured && <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">خبر رئيسي</span>}
-                </td>
-                <td className="px-6 py-4 text-left">
-                  <button onClick={() => openEdit(item)} className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 p-2 rounded-lg transition-colors mx-1"><Edit2 size={18} /></button>
-                  <button onClick={() => handleDelete(item._id)} className="text-red-400 hover:text-red-300 hover:bg-red-400/10 p-2 rounded-lg transition-colors mx-1"><Trash2 size={18} /></button>
-                </td>
-              </tr>
-            ))}
-            {news.length === 0 && (
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-right text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">لا توجد أخبار.</td>
+                <th className="px-6 py-3 font-medium">الصورة</th>
+                <th className="px-6 py-3 font-medium">العنوان</th>
+                <th className="px-6 py-3 font-medium">التاريخ</th>
+                <th className="px-6 py-3 font-medium">حالة التمييز</th>
+                <th className="px-6 py-3 font-medium text-left">إجراءات</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {news.map((item) => (
+                <tr key={item._id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="w-20 h-12 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center">
+                      {item.imageUrl ? (
+                        <img src={item.imageUrl} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <ImageIcon size={16} className="text-slate-400" />
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="font-semibold text-slate-900 truncate max-w-[200px]">{item.titleAr}</div>
+                    <div className="text-slate-500 text-xs mt-0.5 truncate max-w-[200px]" dir="ltr">{item.titleEn}</div>
+                  </td>
+                  <td className="px-6 py-4 text-slate-600">{new Date(item.date).toLocaleDateString('ar-EG')}</td>
+                  <td className="px-6 py-4">
+                    {item.isFeatured && <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">خبر رئيسي</span>}
+                  </td>
+                  <td className="px-6 py-4 text-left">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => openEdit(item)} className="text-slate-400 hover:text-slate-900 hover:bg-slate-100 p-1.5 rounded-md transition-colors"><Edit2 size={16} /></button>
+                      <button onClick={() => handleDelete(item._id)} className="text-slate-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-md transition-colors"><Trash2 size={16} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {news.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-slate-500">لا توجد أخبار مضافة.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between p-6 border-b border-white/5">
-              <h2 className="text-2xl font-bold text-white">{editingId ? 'تعديل الخبر' : 'نشر خبر جديد'}</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5"><X size={24} /></button>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-xl animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <div className="space-y-1">
+                <h2 className="text-xl font-semibold text-slate-900">{editingId ? 'تعديل الخبر' : 'نشر خبر جديد'}</h2>
+                <p className="text-sm text-slate-500">صياغة عنوان وتفاصيل الخبر.</p>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100"><X size={20} /></button>
             </div>
+            
             <div className="p-6 overflow-y-auto custom-scrollbar">
               <form id="newsForm" onSubmit={handleSubmit} className="space-y-6">
                 
-                <div className="flex items-center gap-6 bg-white/5 p-4 rounded-xl border border-white/5">
-                  <div className="w-40 h-24 bg-black border border-white/10 rounded-xl overflow-hidden shrink-0 relative">
+                <div className="flex items-start gap-5">
+                  <div className="w-32 h-20 bg-slate-50 border border-slate-200 rounded-lg overflow-hidden shrink-0 relative flex items-center justify-center">
                     {formData.imageUrl ? (
                       <img src={formData.imageUrl} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-600"><ImageIcon size={32}/></div>
+                      <ImageIcon size={24} className="text-slate-400" />
                     )}
-                    {uploadingImage && <div className="absolute inset-0 bg-black/50 flex items-center justify-center"><div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div></div>}
+                    {uploadingImage && <div className="absolute inset-0 bg-white/80 flex items-center justify-center"><div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div></div>}
                   </div>
-                  <div className="flex-1 space-y-3">
-                    <p className="text-sm text-gray-300 font-medium">صورة الغلاف للخبر</p>
-                    <label className="cursor-pointer bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
-                      <UploadCloud size={18} />
-                      رفع صورة من الجهاز
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">صورة الغلاف للخبر</label>
+                    <label className="cursor-pointer bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
+                      <UploadCloud size={16} /> رفع صورة
                       <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                     </label>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">عنوان الخبر (عربي)</label>
-                    <input required type="text" value={formData.titleAr} onChange={e => setFormData({...formData, titleAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500" />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">عنوان الخبر (عربي)</label>
+                    <input required type="text" value={formData.titleAr} onChange={e => setFormData({...formData, titleAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">عنوان الخبر (إنجليزي)</label>
-                    <input required type="text" dir="ltr" value={formData.titleEn} onChange={e => setFormData({...formData, titleEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left" />
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 block">عنوان الخبر (إنجليزي)</label>
+                    <input required type="text" dir="ltr" value={formData.titleEn} onChange={e => setFormData({...formData, titleEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left" />
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">محتوى الخبر (عربي)</label>
-                    <textarea required rows={6} value={formData.descriptionAr} onChange={e => setFormData({...formData, descriptionAr: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 resize-none"></textarea>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="text-sm font-medium text-slate-700 block">محتوى الخبر (عربي)</label>
+                    <textarea required rows={5} value={formData.descriptionAr} onChange={e => setFormData({...formData, descriptionAr: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all resize-none"></textarea>
                   </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-400 mb-2">محتوى الخبر (إنجليزي)</label>
-                    <textarea required rows={6} dir="ltr" value={formData.descriptionEn} onChange={e => setFormData({...formData, descriptionEn: e.target.value})} className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-red-500 text-left resize-none"></textarea>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="text-sm font-medium text-slate-700 block">محتوى الخبر (إنجليزي)</label>
+                    <textarea required rows={5} dir="ltr" value={formData.descriptionEn} onChange={e => setFormData({...formData, descriptionEn: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all text-left resize-none"></textarea>
                   </div>
-                  <div className="md:col-span-2 flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/5">
-                    <input type="checkbox" id="isFeatured" checked={formData.isFeatured} onChange={e => setFormData({...formData, isFeatured: e.target.checked})} className="w-6 h-6 accent-red-600 rounded cursor-pointer" />
-                    <label htmlFor="isFeatured" className="text-white font-medium cursor-pointer">تمييز كخبر رئيسي هام (يظهر في المقدمة)</label>
+                  
+                  <div className="md:col-span-2 flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <input type="checkbox" id="isFeatured" checked={formData.isFeatured} onChange={e => setFormData({...formData, isFeatured: e.target.checked})} className="w-4 h-4 text-slate-900 bg-white border-slate-300 rounded focus:ring-slate-900" />
+                    <label htmlFor="isFeatured" className="text-sm font-medium text-slate-900 cursor-pointer">تمييز كخبر رئيسي (سيظهر في واجهة قسم الأخبار)</label>
                   </div>
                 </div>
               </form>
             </div>
-            <div className="p-6 border-t border-white/5 bg-[#161616] flex justify-end gap-4 rounded-b-2xl">
-              <button onClick={() => setIsModalOpen(false)} className="px-6 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 font-medium transition-colors">إلغاء</button>
-              <button form="newsForm" type="submit" disabled={loading} className="bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-red-900/20 disabled:opacity-50">{loading ? 'جاري الحفظ...' : 'حفظ الخبر'}</button>
+            
+            <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 rounded-b-xl">
+              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 text-sm font-medium transition-colors">إلغاء</button>
+              <button form="newsForm" type="submit" disabled={loading} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all shadow-sm disabled:opacity-50">
+                {loading ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+              </button>
             </div>
           </div>
         </div>

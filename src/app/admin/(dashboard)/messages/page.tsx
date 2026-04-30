@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Search, Mail, Trash2, CheckCircle } from "lucide-react";
+import { Trash2, CheckCircle, Mail, Clock, Inbox } from "lucide-react";
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<any[]>([]);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchMessages();
@@ -16,79 +15,70 @@ export default function MessagesPage() {
     setMessages(Array.isArray(data) ? data : []);
   };
 
-  const markRead = async (id: string, isRead: boolean) => {
-    await fetch(`/api/contact/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ isRead: !isRead })
-    });
+  const markAsRead = async (id: string) => {
+    await fetch(`/api/contact/${id}`, { method: 'PUT' });
     fetchMessages();
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Delete this message?')) {
+    if (confirm('هل أنت متأكد من حذف هذه الرسالة؟')) {
       await fetch(`/api/contact/${id}`, { method: 'DELETE' });
       fetchMessages();
     }
   };
 
-  const filtered = messages.filter(m => 
-    m.name.toLowerCase().includes(search.toLowerCase()) || 
-    m.email.toLowerCase().includes(search.toLowerCase()) ||
-    m.subject.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold text-white">Inbox Messages</h1>
-        <div className="relative w-full md:w-64">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input 
-            type="text" 
-            placeholder="Search messages..." 
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded-lg text-white focus:border-red-500 outline-none transition-colors"
-          />
-        </div>
+    <div className="space-y-6 animate-in fade-in duration-200 pb-20">
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight text-slate-900">صندوق الرسائل</h2>
+        <p className="text-sm text-slate-500 mt-1">تصفح رسائل العملاء القادمة من نموذج اتصل بنا.</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {filtered.map((msg) => (
-          <div key={msg._id} className={`bg-gray-900 border ${msg.isRead ? 'border-gray-800 opacity-70' : 'border-red-900/50'} rounded-xl p-6 transition-all`}>
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex gap-4">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${msg.isRead ? 'bg-gray-800 text-gray-400' : 'bg-red-500/20 text-red-400'}`}>
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white leading-tight">{msg.name}</h3>
-                  <p className="text-sm text-gray-400">{msg.email}</p>
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        {messages.length === 0 ? (
+          <div className="p-12 text-center flex flex-col items-center">
+            <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+              <Inbox size={28} className="text-slate-300" />
+            </div>
+            <h3 className="text-lg font-medium text-slate-900">لا توجد رسائل جديدة</h3>
+            <p className="text-slate-500 text-sm mt-1">صندوق الوارد الخاص بك فارغ حالياً.</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {messages.map((msg) => (
+              <div key={msg._id} className={`p-6 transition-colors ${msg.isRead ? 'bg-white' : 'bg-blue-50/30'}`}>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-4 flex-1">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-white font-bold ${msg.isRead ? 'bg-slate-300' : 'bg-blue-500 shadow-sm shadow-blue-500/20'}`}>
+                      {msg.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-3">
+                        <h4 className={`text-base ${msg.isRead ? 'font-medium text-slate-700' : 'font-bold text-slate-900'}`}>{msg.name}</h4>
+                        {!msg.isRead && <span className="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">جديد</span>}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span className="flex items-center gap-1.5"><Mail size={12}/> {msg.email}</span>
+                        <span className="flex items-center gap-1.5"><Clock size={12}/> {new Date(msg.createdAt).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                      <h5 className="font-semibold text-slate-900 mt-3">{msg.subject}</h5>
+                      <p className="text-sm text-slate-600 leading-relaxed mt-2 p-4 bg-slate-50 rounded-lg border border-slate-100">{msg.message}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    {!msg.isRead && (
+                      <button onClick={() => markAsRead(msg._id)} className="text-xs font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
+                        <CheckCircle size={14}/> تحديد كمقروء
+                      </button>
+                    )}
+                    <button onClick={() => handleDelete(msg._id)} className="text-xs font-medium text-red-500 hover:text-red-700 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors">
+                      <Trash2 size={14}/> حذف
+                    </button>
+                  </div>
                 </div>
               </div>
-              <span className="text-xs text-gray-500">{new Date(msg.createdAt).toLocaleString()}</span>
-            </div>
-            
-            <div className="pl-14">
-              <h4 className="font-semibold text-gray-200 mb-2">{msg.subject}</h4>
-              <p className="text-gray-400 text-sm whitespace-pre-wrap">{msg.message}</p>
-            </div>
-
-            <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-gray-800">
-              <button onClick={() => markRead(msg._id, msg.isRead)} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${msg.isRead ? 'text-gray-400 hover:bg-gray-800 hover:text-white' : 'text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20'}`}>
-                <CheckCircle size={16} /> {msg.isRead ? 'Mark as Unread' : 'Mark as Read'}
-              </button>
-              <button onClick={() => handleDelete(msg._id)} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 transition-colors">
-                <Trash2 size={16} /> Delete
-              </button>
-            </div>
-          </div>
-        ))}
-        {filtered.length === 0 && (
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
-            <Mail size={48} className="mx-auto text-gray-700 mb-4" />
-            <p className="text-gray-400 font-medium">No messages found.</p>
+            ))}
           </div>
         )}
       </div>
