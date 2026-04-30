@@ -38,7 +38,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="home">
-      <div className="hero-bg overflow-hidden relative w-full h-full">
+      <div className="hero-bg overflow-hidden absolute inset-0 w-full h-full z-0">
         <AnimatePresence initial={false}>
           {slides.length > 0 && (
             slides[currentIndex].match(/\.(mp4|webm|ogg)$/i) ? (
