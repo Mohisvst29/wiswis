@@ -1,5 +1,6 @@
 export const translations: any = {
   en: {
+      nav_home: "Home",
       nav_about: "About",
       nav_services: "Services",
       nav_branches: "Branches",
@@ -67,6 +68,7 @@ export const translations: any = {
       footer_social: "Connect"
   },
   ar: {
+      nav_home: "الرئيسية",
       nav_about: "من نحن",
       nav_services: "خدماتنا",
       nav_branches: "الفروع",

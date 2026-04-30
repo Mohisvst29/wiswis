@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { useLang } from '@/components/LangProvider';
+import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function Contact() {
   const { t, lang } = useLang();
@@ -46,18 +47,18 @@ export default function Contact() {
           
           <div className="info-items">
             <div className="info-item">
-              <div className="info-icon">📞</div>
+              <div className="info-icon"><Phone size={24} color="#7A0C16" /></div>
               <div>
                 <p>0554460672</p>
                 <p>0530783848</p>
               </div>
             </div>
             <div className="info-item">
-              <div className="info-icon">✉️</div>
+              <div className="info-icon"><Mail size={24} color="#7A0C16" /></div>
               <p>info@wiswis.com</p>
             </div>
             <div className="info-item">
-              <div className="info-icon">📍</div>
+              <div className="info-icon"><MapPin size={24} color="#7A0C16" /></div>
               <p>{t('contact_address')}</p>
             </div>
           </div>
