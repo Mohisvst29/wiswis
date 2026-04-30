@@ -50,8 +50,8 @@ export default function Navbar() {
 
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
-      <div className="nav-container">
-        <div className="logo">
+      <div className="nav-container" style={isMobile ? {} : { display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', width: '100%' }}>
+        <div className="logo" style={isMobile ? {} : { justifySelf: 'start' }}>
           {logo ? (
             <img src={logo} alt={siteName} className="brand-logo" />
           ) : (
@@ -72,7 +72,7 @@ export default function Navbar() {
             right: lang === 'ar' ? 0 : 'auto',
             left: lang === 'en' ? 0 : 'auto',
             transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
-          } : undefined}
+          } : { justifySelf: 'center' }}
         >
           <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -85,10 +85,8 @@ export default function Navbar() {
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t('nav_contact')}</a>
         </nav>
         
-        <div className="nav-actions desktop-only" style={{ display: 'none' }}>
-          <div className="contact-numbers">
-            {phones.map((p, i) => <span key={i} dir="ltr">{p}</span>)}
-          </div>
+        <div className="nav-actions desktop-only" style={{ display: isMobile ? 'none' : 'block', justifySelf: 'end' }}>
+          <a href="#contact" className="btn btn-primary" style={{ padding: '0.6rem 2.2rem', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)' }}>أرسل لنا</a>
         </div>
       </div>
     </header>
