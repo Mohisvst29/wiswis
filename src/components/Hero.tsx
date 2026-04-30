@@ -50,7 +50,7 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', WebkitTransform: 'translate3d(0,0,0)', transform: 'translate3d(0,0,0)', willChange: 'transform' }}
               />
             ) : (
               <motion.img

@@ -64,15 +64,8 @@ export default function Navbar() {
         </button>
         
         <nav 
-          className="nav-links" 
-          style={isMobile ? { 
-            transform: menuOpen ? 'translateX(0)' : (lang === 'ar' ? 'translateX(100%)' : 'translateX(-100%)'),
-            opacity: menuOpen ? 1 : 0,
-            pointerEvents: menuOpen ? 'auto' : 'none',
-            right: lang === 'ar' ? 0 : 'auto',
-            left: lang === 'en' ? 0 : 'auto',
-            transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
-          } : { justifySelf: 'center' }}
+          className={`nav-links ${menuOpen ? 'active' : ''}`}
+          style={isMobile ? undefined : { justifySelf: 'center' }}
         >
           <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -82,7 +75,7 @@ export default function Navbar() {
           <a href="#services" onClick={() => setMenuOpen(false)}>{t('nav_services')}</a>
           <a href="#branches" onClick={() => setMenuOpen(false)}>{t('nav_branches')}</a>
           <a href="#news" onClick={() => setMenuOpen(false)}>{t('nav_news')}</a>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>{t('nav_contact')}</a>
+          <a href="#contact" onClick={() => { setMenuOpen(false); window.dispatchEvent(new CustomEvent('openContactModal')); }}>{t('nav_contact')}</a>
         </nav>
         
         <div className="nav-actions desktop-only" style={{ display: isMobile ? 'none' : 'block', justifySelf: 'end' }}>
