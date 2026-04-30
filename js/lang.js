@@ -1,0 +1,183 @@
+// lang.js
+const translations = {
+    en: {
+        nav_about: "About",
+        nav_services: "Services",
+        nav_branches: "Branches",
+        nav_news: "News",
+        nav_contact: "Contact",
+        
+        hero_title: "Towards a Limitless Journey",
+        hero_sub: "Integrated fuel and roadside services with global standards",
+        btn_explore: "Explore Services",
+        btn_contact: "Contact Us",
+        
+        stat_years: "Years Experience",
+        stat_branches: "Branches",
+        stat_clients: "Happy Clients",
+        stat_support: "Support",
+        
+        badge_text: "Years of Excellence",
+        about_sub: "Who We Are",
+        about_title: "Redefining Energy & Road Services",
+        about_text: "Wiswis is a premium national brand committed to providing top-tier fuel and roadside services. With an industrial-grade infrastructure and a focus on luxury customer experience, we ensure every journey is smooth, safe, and fully energized.",
+        feat_1: "Premium Fuel Quality",
+        feat_2: "Advanced Maintenance",
+        feat_3: "24/7 Availability",
+        btn_learn_more: "Learn More",
+        btn_trademark: "Trademark Registration",
+        
+        services_sub: "Our Expertise",
+        services_title: "World-Class Services",
+        srv_fuel: "Fuel Stations",
+        srv_fuel_desc: "High-performance fuel for optimal engine efficiency.",
+        srv_wash: "Car Wash",
+        srv_wash_desc: "Premium automated and manual detailing services.",
+        srv_maint: "Maintenance",
+        srv_maint_desc: "Expert diagnostics and rapid roadside repair.",
+        srv_market: "Supermarket",
+        srv_market_desc: "24/7 premium convenience stores for your journey.",
+        srv_coffee: "Coffee & Lounge",
+        srv_coffee_desc: "High-end barista coffee and relaxation zones.",
+        
+        branches_sub: "Our Network",
+        branches_title: "Find a Station Near You",
+        city_all: "All",
+        city_riyadh: "Riyadh",
+        city_jeddah: "Jeddah",
+        city_dammam: "Dammam",
+        branch_1: "King Fahd Road Station",
+        branch_1_desc: "Full Service • 24/7",
+        branch_2: "Airport Highway Station",
+        branch_2_desc: "Fuel & Coffee • 24/7",
+        branch_3: "Corniche Branch",
+        branch_3_desc: "Supermarket & Wash",
+        
+        news_sub: "Media Center",
+        news_title: "Latest Updates",
+        news_1_title: "Wiswis Expands Green Energy Initiative Across 50 Stations",
+        news_1_desc: "Introducing EV charging infrastructure and solar-powered facilities to lead the sustainable energy transition.",
+        news_2_title: "New Luxury Lounges Opened",
+        news_3_title: "Partnership with Premium Coffee Brands",
+        read_more: "Read More →",
+        
+        contact_sub: "Get in Touch",
+        contact_title: "We Are Here For You",
+        contact_text: "Reach out to our corporate team for partnerships, inquiries, or support.",
+        contact_address: "Riyadh, Saudi Arabia, Corporate HQ",
+        form_name: "Full Name",
+        form_email: "Email Address",
+        form_subject: "Subject",
+        form_message: "Message",
+        btn_send: "Send Message",
+        
+        footer_desc: "Premium fuel and road services across the nation.",
+        footer_links: "Quick Links",
+        footer_social: "Connect"
+    },
+    ar: {
+        nav_about: "من نحن",
+        nav_services: "خدماتنا",
+        nav_branches: "الفروع",
+        nav_news: "الأخبار",
+        nav_contact: "تواصل معنا",
+        
+        hero_title: "نحو رحلة بلا حدود",
+        hero_sub: "حلول متكاملة لخدمات الوقود والطريق بمعايير عالمية",
+        btn_explore: "استكشف الخدمات",
+        btn_contact: "تواصل معنا",
+        
+        stat_years: "سنوات خبرة",
+        stat_branches: "فرعاً",
+        stat_clients: "عملاء سعداء",
+        stat_support: "دعم فني",
+        
+        badge_text: "سنوات من التميز",
+        about_sub: "من نحن",
+        about_title: "نعيد تعريف خدمات الطاقة والطريق",
+        about_text: "وسوس هي علامة تجارية وطنية رائدة ملتزمة بتقديم خدمات الوقود والطريق بأعلى المعايير. بفضل البنية التحتية الصناعية المتقدمة والتركيز على تجربة العملاء الفاخرة، نضمن أن تكون كل رحلة سلسة وآمنة ومليئة بالطاقة.",
+        feat_1: "جودة وقود فائقة",
+        feat_2: "صيانة متقدمة",
+        feat_3: "متاحون على مدار الساعة",
+        btn_learn_more: "اعرف المزيد",
+        btn_trademark: "شهادة تسجيل علامة تجارية",
+        
+        services_sub: "خبراتنا",
+        services_title: "خدمات بمعايير عالمية",
+        srv_fuel: "محطات الوقود",
+        srv_fuel_desc: "وقود عالي الأداء لكفاءة المحرك المثالية.",
+        srv_wash: "غسيل السيارات",
+        srv_wash_desc: "خدمات غسيل وتلميع آلية ويدوية فاخرة.",
+        srv_maint: "الصيانة",
+        srv_maint_desc: "تشخيص الأعطال وإصلاح سريع على الطريق.",
+        srv_market: "سوبر ماركت",
+        srv_market_desc: "متاجر تموينات فاخرة لخدمتك في رحلتك 24/7.",
+        srv_coffee: "قهوة واستراحة",
+        srv_coffee_desc: "قهوة مختصة وأماكن استرخاء راقية.",
+        
+        branches_sub: "شبكتنا",
+        branches_title: "ابحث عن أقرب محطة",
+        city_all: "الكل",
+        city_riyadh: "الرياض",
+        city_jeddah: "جدة",
+        city_dammam: "الدمام",
+        branch_1: "محطة طريق الملك فهد",
+        branch_1_desc: "خدمة كاملة • 24/7",
+        branch_2: "محطة طريق المطار",
+        branch_2_desc: "وقود وقهوة • 24/7",
+        branch_3: "فرع الكورنيش",
+        branch_3_desc: "سوبر ماركت وغسيل",
+        
+        news_sub: "المركز الإعلامي",
+        news_title: "أحدث الأخبار",
+        news_1_title: "وسوس توسع مبادرة الطاقة الخضراء في 50 محطة",
+        news_1_desc: "تقديم البنية التحتية لشحن السيارات الكهربائية والمرافق التي تعمل بالطاقة الشمسية لقيادة التحول في الطاقة المستدامة.",
+        news_2_title: "افتتاح استراحات فاخرة جديدة",
+        news_3_title: "شراكة مع علامات تجارية عالمية للقهوة",
+        read_more: "اقرأ المزيد ←",
+        
+        contact_sub: "تواصل معنا",
+        contact_title: "نحن هنا لخدمتك",
+        contact_text: "تواصل مع فريقنا لطلبات الشراكة والاستفسارات أو الدعم.",
+        contact_address: "الرياض، المملكة العربية السعودية، المقر الرئيسي",
+        form_name: "الاسم الكامل",
+        form_email: "البريد الإلكتروني",
+        form_subject: "الموضوع",
+        form_message: "الرسالة",
+        btn_send: "إرسال الرسالة",
+        
+        footer_desc: "خدمات وقود وطريق فاخرة عبر أنحاء الوطن.",
+        footer_links: "روابط سريعة",
+        footer_social: "تواصل معنا"
+    }
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', lang);
+    
+    document.getElementById('langToggle').textContent = lang === 'ar' ? 'EN' : 'AR';
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+
+    // reverse arrow in read more
+    document.querySelectorAll('.read-more').forEach(el => {
+        if(lang === 'ar') {
+            el.textContent = el.textContent.replace('→', '←');
+        } else {
+            el.textContent = el.textContent.replace('←', '→');
+        }
+    });
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+    setLanguage(currentLang === 'en' ? 'ar' : 'en');
+});

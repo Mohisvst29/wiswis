@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiswis Petroleum Services | وسوس لخدمات الوقود</title>
+    <meta name="description" content="Integrated fuel and roadside services with global standards. حلول متكاملة لخدمات الوقود والطريق بمعايير عالمية.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Inter:wght@400;500;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Wiswis Logo" class="brand-logo">
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#about" data-i18n="nav_about">About</a>
+                <a href="#services" data-i18n="nav_services">Services</a>
+                <a href="#branches" data-i18n="nav_branches">Branches</a>
+                <a href="#news" data-i18n="nav_news">News</a>
+                <a href="#contact" data-i18n="nav_contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="contact-numbers">
+                    <span>0554460672</span>
+                    <span>0530783848</span>
+                </div>
+                <button class="lang-toggle" id="langToggle">AR</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="assets/wiswis_hero.png" alt="Wiswis Hero" class="hero-image" id="hero-img">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title reveal-text" data-i18n="hero_title">Towards a Limitless Journey</h1>
+            <p class="hero-subtitle reveal-text delay-1" data-i18n="hero_sub">Integrated fuel and roadside services with global standards</p>
+            <div class="hero-buttons reveal-text delay-2">
+                <a href="#services" class="btn btn-primary btn-glow" data-i18n="btn_explore">Explore Services</a>
+                <a href="#contact" class="btn btn-outline" data-i18n="btn_contact">Contact Us</a>
+            </div>
+        </div>
+        
+        <div class="hero-particles"></div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="stats-container reveal-scroll">
+            <div class="stat-item">
+                <span class="stat-number" data-target="25">0</span><span class="stat-plus">+</span>
+                <p class="stat-label" data-i18n="stat_years">Years Experience</p>
+            </div>
+            <div class="stat-separator"></div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="150">0</span><span class="stat-plus">+</span>
+                <p class="stat-label" data-i18n="stat_branches">Branches</p>
+            </div>
+            <div class="stat-separator"></div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="10">0</span><span class="stat-letter">M</span>
+                <p class="stat-label" data-i18n="stat_clients">Happy Clients</p>
+            </div>
+            <div class="stat-separator"></div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="24">0</span><span class="stat-letter">/7</span>
+                <p class="stat-label" data-i18n="stat_support">Support</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image-wrapper reveal-scroll left">
+                <img src="assets/wiswis_about.png" alt="About Wiswis" class="about-img">
+                <div class="floating-badge">
+                    <span class="badge-number">25+</span>
+                    <span class="badge-text" data-i18n="badge_text">Years of Excellence</span>
+                </div>
+            </div>
+            <div class="about-content reveal-scroll right">
+                <h4 class="section-subtitle" data-i18n="about_sub">Who We Are</h4>
+                <h2 class="section-title" data-i18n="about_title">Redefining Energy & Road Services</h2>
+                <p class="about-text" data-i18n="about_text">Wiswis is a premium national brand committed to providing top-tier fuel and roadside services. With an industrial-grade infrastructure and a focus on luxury customer experience, we ensure every journey is smooth, safe, and fully energized.</p>
+                <ul class="about-features">
+                    <li data-i18n="feat_1">Premium Fuel Quality</li>
+                    <li data-i18n="feat_2">Advanced Maintenance</li>
+                    <li data-i18n="feat_3">24/7 Availability</li>
+                </ul>
+                <div class="about-buttons">
+                    <a href="#services" class="btn btn-primary btn-glow" data-i18n="btn_learn_more">Learn More</a>
+                    <a href="#" class="btn btn-outline btn-icon" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span data-i18n="btn_trademark">Trademark Registration</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header reveal-scroll">
+            <h4 class="section-subtitle" data-i18n="services_sub">Our Expertise</h4>
+            <h2 class="section-title" data-i18n="services_title">World-Class Services</h2>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card reveal-scroll">
+                <img src="assets/wiswis_services.png" alt="Fuel Stations" class="service-img">
+                <div class="service-overlay"></div>
+                <div class="service-content">
+                    <h3 data-i18n="srv_fuel">Fuel Stations</h3>
+                    <p data-i18n="srv_fuel_desc">High-performance fuel for optimal engine efficiency.</p>
+                </div>
+            </div>
+            <!-- Service 2 -->
+            <div class="service-card reveal-scroll delay-1">
+                <img src="assets/wiswis_hero.png" alt="Car Wash" class="service-img">
+                <div class="service-overlay"></div>
+                <div class="service-content">
+                    <h3 data-i18n="srv_wash">Car Wash</h3>
+                    <p data-i18n="srv_wash_desc">Premium automated and manual detailing services.</p>
+                </div>
+            </div>
+            <!-- Service 3 -->
+            <div class="service-card reveal-scroll delay-2">
+                <img src="assets/wiswis_about.png" alt="Maintenance" class="service-img">
+                <div class="service-overlay"></div>
+                <div class="service-content">
+                    <h3 data-i18n="srv_maint">Maintenance</h3>
+                    <p data-i18n="srv_maint_desc">Expert diagnostics and rapid roadside repair.</p>
+                </div>
+            </div>
+            <!-- Service 4 -->
+            <div class="service-card reveal-scroll">
+                <img src="assets/wiswis_services.png" alt="Supermarket" class="service-img">
+                <div class="service-overlay"></div>
+                <div class="service-content">
+                    <h3 data-i18n="srv_market">Supermarket</h3>
+                    <p data-i18n="srv_market_desc">24/7 premium convenience stores for your journey.</p>
+                </div>
+            </div>
+            <!-- Service 5 -->
+            <div class="service-card reveal-scroll delay-1">
+                <img src="assets/wiswis_hero.png" alt="Coffee" class="service-img">
+                <div class="service-overlay"></div>
+                <div class="service-content">
+                    <h3 data-i18n="srv_coffee">Coffee & Lounge</h3>
+                    <p data-i18n="srv_coffee_desc">High-end barista coffee and relaxation zones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section class="branches" id="branches">
+        <div class="section-header reveal-scroll">
+            <h4 class="section-subtitle" data-i18n="branches_sub">Our Network</h4>
+            <h2 class="section-title" data-i18n="branches_title">Find a Station Near You</h2>
+        </div>
+        
+        <div class="branches-container reveal-scroll">
+            <div class="branches-sidebar">
+                <div class="filter-group">
+                    <button class="filter-btn active" data-i18n="city_all">All</button>
+                    <button class="filter-btn" data-i18n="city_riyadh">Riyadh</button>
+                    <button class="filter-btn" data-i18n="city_jeddah">Jeddah</button>
+                    <button class="filter-btn" data-i18n="city_dammam">Dammam</button>
+                </div>
+                <div class="branches-list">
+                    <div class="branch-card active">
+                        <h4 data-i18n="branch_1">King Fahd Road Station</h4>
+                        <p data-i18n="branch_1_desc">Full Service • 24/7</p>
+                    </div>
+                    <div class="branch-card">
+                        <h4 data-i18n="branch_2">Airport Highway Station</h4>
+                        <p data-i18n="branch_2_desc">Fuel & Coffee • 24/7</p>
+                    </div>
+                    <div class="branch-card">
+                        <h4 data-i18n="branch_3">Corniche Branch</h4>
+                        <p data-i18n="branch_3_desc">Supermarket & Wash</p>
+                    </div>
+                </div>
+            </div>
+            <div class="branches-map">
+                <!-- Custom Dark Map placeholder -->
+                <div class="map-placeholder">
+                    <div class="map-pin active" style="top: 40%; left: 30%;"></div>
+                    <div class="map-pin" style="top: 60%; left: 50%;"></div>
+                    <div class="map-pin" style="top: 30%; left: 70%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news" id="news">
+        <div class="section-header reveal-scroll">
+            <h4 class="section-subtitle" data-i18n="news_sub">Media Center</h4>
+            <h2 class="section-title" data-i18n="news_title">Latest Updates</h2>
+        </div>
+
+        <div class="news-layout reveal-scroll">
+            <div class="news-featured">
+                <div class="news-img-wrapper">
+                    <img src="assets/wiswis_about.png" alt="Featured News">
+                </div>
+                <div class="news-content">
+                    <span class="news-date">Oct 15, 2026</span>
+                    <h3 data-i18n="news_1_title">Wiswis Expands Green Energy Initiative Across 50 Stations</h3>
+                    <p data-i18n="news_1_desc">Introducing EV charging infrastructure and solar-powered facilities to lead the sustainable energy transition.</p>
+                    <a href="#" class="read-more" data-i18n="read_more">Read More →</a>
+                </div>
+            </div>
+            <div class="news-grid">
+                <div class="news-item">
+                    <div class="news-img-wrapper">
+                        <img src="assets/wiswis_services.png" alt="News 2">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">Sep 28, 2026</span>
+                        <h4 data-i18n="news_2_title">New Luxury Lounges Opened</h4>
+                        <a href="#" class="read-more" data-i18n="read_more">Read More →</a>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-img-wrapper">
+                        <img src="assets/wiswis_hero.png" alt="News 3">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">Sep 10, 2026</span>
+                        <h4 data-i18n="news_3_title">Partnership with Premium Coffee Brands</h4>
+                        <a href="#" class="read-more" data-i18n="read_more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container reveal-scroll">
+            <div class="contact-info">
+                <h4 class="section-subtitle" data-i18n="contact_sub">Get in Touch</h4>
+                <h2 class="section-title" data-i18n="contact_title">We Are Here For You</h2>
+                <p data-i18n="contact_text">Reach out to our corporate team for partnerships, inquiries, or support.</p>
+                
+                <div class="info-items">
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <p>0554460672</p>
+                            <p>0530783848</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <p>info@wiswis.com</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <p data-i18n="contact_address">Riyadh, Saudi Arabia, Corporate HQ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" required placeholder=" ">
+                        <label for="name" data-i18n="form_name">Full Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" required placeholder=" ">
+                        <label for="email" data-i18n="form_email">Email Address</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" required placeholder=" ">
+                        <label for="subject" data-i18n="form_subject">Subject</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="4" required placeholder=" "></textarea>
+                        <label for="message" data-i18n="form_message">Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="btn_send">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="assets/logo.png" alt="Wiswis Logo" class="brand-logo-footer">
+                <p data-i18n="footer_desc">Premium fuel and road services across the nation.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footer_links">Quick Links</h4>
+                <a href="#about" data-i18n="nav_about">About</a>
+                <a href="#services" data-i18n="nav_services">Services</a>
+                <a href="#branches" data-i18n="nav_branches">Branches</a>
+            </div>
+            <div class="footer-social">
+                <h4 data-i18n="footer_social">Connect</h4>
+                <div class="social-icons">
+                    <a href="#">X</a>
+                    <a href="#">In</a>
+                    <a href="#">Ig</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wiswis Petroleum. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/lang.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
