@@ -43,11 +43,14 @@ export default function Navbar() {
           )}
         </div>
         
-        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999 }}>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         
         <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
+          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: menuOpen ? 'block' : 'none', position: 'absolute', top: '20px', left: '20px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
           <a href="#" onClick={() => setMenuOpen(false)}>{t('nav_home')}</a>
           <a href="#about" onClick={() => setMenuOpen(false)}>{t('nav_about')}</a>
           <a href="#services" onClick={() => setMenuOpen(false)}>{t('nav_services')}</a>
