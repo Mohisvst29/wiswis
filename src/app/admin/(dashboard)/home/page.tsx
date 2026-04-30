@@ -74,14 +74,18 @@ export default function HomePageAdmin() {
         <div className="mb-6">
           <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 h-11 px-6 rounded-xl text-sm font-semibold transition-colors inline-flex items-center gap-2">
             {uploadingImage ? <div className="w-4 h-4 border-2 border-gray-700 border-t-transparent rounded-full animate-spin"></div> : <UploadCloud size={16} />}
-            رفع صور جديدة
-            <input type="file" multiple className="hidden" accept="image/*" onChange={handleHeroUpload} disabled={uploadingImage} />
+            رفع صور أو فيديو
+            <input type="file" multiple className="hidden" accept="image/*,video/*" onChange={handleHeroUpload} disabled={uploadingImage} />
           </label>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {slides.map((url, i) => (
             <div key={i} className="group relative bg-gray-100 rounded-2xl overflow-hidden aspect-video border border-gray-200 shadow-sm">
-              <img src={url} className="w-full h-full object-cover" />
+              {url.match(/\.(mp4|webm|ogg)$/i) ? (
+                <video src={url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+              ) : (
+                <img src={url} className="w-full h-full object-cover" />
+              )}
               <div className="absolute inset-0 bg-gray-900/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button onClick={() => setSlides(prev => prev.filter((_, idx) => idx !== i))} className="bg-white text-red-600 hover:bg-red-50 px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-2">
                   <Trash2 size={16} /> إزالة

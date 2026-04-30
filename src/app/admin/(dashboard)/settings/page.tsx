@@ -101,13 +101,13 @@ export default function SettingsPage() {
         </FormGrid>
       </SectionCard>
 
-      <SectionCard title="4. بيانات التواصل" description="الأرقام والإيميلات لخدمة العملاء">
+      <SectionCard title="4. بيانات التواصل" description="الأرقام والإيميلات لخدمة العملاء (لفصل أكثر من رقم أو إيميل، استخدم الفاصلة , )">
         <FormGrid>
-          <FormField label="رقم الجوال">
-            <Input dir="ltr" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} placeholder="+966..." />
+          <FormField label="رقم الجوال (مفصولة بفاصلة)">
+            <Input dir="ltr" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} placeholder="055..., 053..." />
           </FormField>
-          <FormField label="البريد الإلكتروني">
-            <Input dir="ltr" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} placeholder="info@wiswis.com" />
+          <FormField label="البريد الإلكتروني (مفصولة بفاصلة)">
+            <Input dir="ltr" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} placeholder="info@..., support@..." />
           </FormField>
           <FormField label="اسم الموقع (عربي)">
             <Input value={settings.siteNameAr || ''} onChange={e => handleChange('siteNameAr', e.target.value)} />

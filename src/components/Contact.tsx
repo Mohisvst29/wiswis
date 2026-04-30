@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLang } from '@/components/LangProvider';
 import { Phone, Mail, MapPin } from "lucide-react";
 
@@ -7,6 +7,17 @@ export default function Contact() {
   const { t, lang } = useLang();
   const [btnText, setBtnText] = useState(t('btn_send'));
   const [btnBg, setBtnBg] = useState('');
+  const [phones, setPhones] = useState<string[]>(['0554460672', '0530783848']);
+  const [emails, setEmails] = useState<string[]>(['info@wiswis.com']);
+
+  useEffect(() => {
+    fetch('/api/settings').then(r => r.json()).then(data => {
+      if (data) {
+        if (data.phone) setPhones(data.phone.split(',').map((p:string) => p.trim()).filter(Boolean));
+        if (data.email) setEmails(data.email.split(',').map((e:string) => e.trim()).filter(Boolean));
+      }
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,13 +60,14 @@ export default function Contact() {
             <div className="info-item">
               <div className="info-icon"><Phone size={24} color="#7A0C16" /></div>
               <div>
-                <p>0554460672</p>
-                <p>0530783848</p>
+                {phones.map((p, i) => <p key={i} dir="ltr" className="text-right">{p}</p>)}
               </div>
             </div>
             <div className="info-item">
               <div className="info-icon"><Mail size={24} color="#7A0C16" /></div>
-              <p>info@wiswis.com</p>
+              <div>
+                {emails.map((email, i) => <p key={i} dir="ltr" className="text-right">{email}</p>)}
+              </div>
             </div>
             <div className="info-item">
               <div className="info-icon"><MapPin size={24} color="#7A0C16" /></div>

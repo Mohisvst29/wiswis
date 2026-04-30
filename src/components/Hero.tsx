@@ -34,7 +34,7 @@ export default function Hero() {
     if (slides.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 5000); // switch every 5 seconds
+    }, 6000); // switch every 6 seconds
     return () => clearInterval(interval);
   }, [slides]);
 
@@ -43,15 +43,28 @@ export default function Hero() {
       <div className="hero-bg overflow-hidden relative w-full h-full">
         <AnimatePresence initial={false}>
           {slides.length > 0 && (
-            <motion.img
-              key={currentIndex}
-              src={slides[currentIndex]}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            slides[currentIndex].match(/\.(mp4|webm|ogg)$/i) ? (
+              <motion.video
+                key={currentIndex}
+                src={slides[currentIndex]}
+                autoPlay loop muted playsInline
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <motion.img
+                key={currentIndex}
+                src={slides[currentIndex]}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )
           )}
         </AnimatePresence>
         <div className="hero-overlay"></div>
