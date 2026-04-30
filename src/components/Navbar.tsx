@@ -40,16 +40,7 @@ export default function Navbar() {
             <img src={logo} alt={siteName} className="brand-logo" />
           ) : (
             <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold' }}>{siteName}</h2>
-          )}
-        </div>
-        
-        <div className="nav-actions">
-          <div className="contact-numbers">
-            {phones.map((p, i) => <span key={i} dir="ltr">{p}</span>)}
-          </div>
-        </div>
-
-        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: 'block', marginLeft: 'auto' }}>
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: 'block', marginInlineStart: 'auto' }}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         
@@ -74,6 +65,12 @@ export default function Navbar() {
           <a href="#news" onClick={() => setMenuOpen(false)}>{t('nav_news')}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t('nav_contact')}</a>
         </nav>
+        
+        <div className="nav-actions desktop-only" style={{ display: 'none' }}>
+          <div className="contact-numbers">
+            {phones.map((p, i) => <span key={i} dir="ltr">{p}</span>)}
+          </div>
+        </div>
       </div>
     </header>
   );
