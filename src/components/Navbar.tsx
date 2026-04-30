@@ -67,7 +67,7 @@ export default function Navbar() {
           className={`nav-links ${menuOpen ? 'active' : ''}`}
           style={isMobile ? undefined : { justifySelf: 'center' }}
         >
-          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
+          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: '20px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <a href="#" onClick={() => setMenuOpen(false)}>{t('nav_home')}</a>

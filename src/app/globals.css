@@ -277,7 +277,6 @@ html[dir="rtl"] .contact-numbers {
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%;
         width: 300px;
         height: 100dvh;
         background: rgba(10, 10, 10, 0.98);
@@ -286,24 +285,19 @@ html[dir="rtl"] .contact-numbers {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        gap: 1.5rem;
         z-index: 999999;
         box-shadow: -5px 0 30px rgba(0,0,0,0.5);
-    }
-    html[dir="rtl"] .nav-links {
-        left: auto;
-        right: -100%;
-    }
-    html[dir="rtl"] .nav-links.active {
+        /* Start off-screen to the right */
         right: 0;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-    html[dir="ltr"] .nav-links {
-        right: auto;
-        left: -100%;
-        box-shadow: 5px 0 30px rgba(0,0,0,0.5);
+    .nav-links.active {
+        transform: translateX(0) !important;
     }
-    html[dir="ltr"] .nav-links.active {
-        left: 0;
+    .nav-links a {
+        font-size: 1.3rem;
     }
     .mobile-menu-btn {
         display: block;
@@ -335,9 +329,6 @@ html[dir="rtl"] .contact-numbers {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.05);
-    will-change: transform;
-    animation: slowZoom 20s infinite alternate linear;
 }
 
 .hero-overlay {
