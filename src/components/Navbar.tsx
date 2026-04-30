@@ -43,13 +43,29 @@ export default function Navbar() {
           )}
         </div>
         
-        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999 }}>
+        <div className="nav-actions">
+          <div className="contact-numbers">
+            {phones.map((p, i) => <span key={i} dir="ltr">{p}</span>)}
+          </div>
+        </div>
+
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: 'block', marginLeft: 'auto' }}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         
-        <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: menuOpen ? 'block' : 'none', position: 'absolute', top: '20px', left: '20px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <nav 
+          className="nav-links" 
+          style={{ 
+            transform: menuOpen ? 'translateX(0)' : (lang === 'ar' ? 'translateX(100%)' : 'translateX(-100%)'),
+            opacity: menuOpen ? 1 : 0,
+            pointerEvents: menuOpen ? 'auto' : 'none',
+            right: lang === 'ar' ? 0 : 'auto',
+            left: lang === 'en' ? 0 : 'auto',
+            transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
+          }}
+        >
+          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ position: 'absolute', top: '20px', left: lang === 'ar' ? '20px' : 'auto', right: lang === 'en' ? '20px' : 'auto', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
+            <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <a href="#" onClick={() => setMenuOpen(false)}>{t('nav_home')}</a>
           <a href="#about" onClick={() => setMenuOpen(false)}>{t('nav_about')}</a>
@@ -58,15 +74,6 @@ export default function Navbar() {
           <a href="#news" onClick={() => setMenuOpen(false)}>{t('nav_news')}</a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>{t('nav_contact')}</a>
         </nav>
-
-        <div className="nav-actions">
-          <div className="contact-numbers">
-            {phones.map((p, i) => <span key={i} dir="ltr">{p}</span>)}
-          </div>
-          <button className="lang-toggle" onClick={toggleLang}>
-            {lang === 'ar' ? 'EN' : 'AR'}
-          </button>
-        </div>
       </div>
     </header>
   );
