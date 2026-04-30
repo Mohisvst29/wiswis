@@ -1051,18 +1051,15 @@ html[dir="rtl"] .form-group label {
     .about-features {
         padding: 0 !important;
         margin: 0 auto 2.5rem auto !important;
-        display: table !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: fit-content !important;
     }
     .about-features li {
         display: flex !important;
         justify-content: flex-start !important;
         width: auto !important;
-    }
-    html[dir="rtl"] .about-features {
-        transform: translateX(15px);
-    }
-    html[dir="ltr"] .about-features {
-        transform: translateX(-15px);
     }
     .floating-badge {
         width: 100px;
