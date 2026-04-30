@@ -7,7 +7,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     await connectDB();
     const { id } = await params;
     const body = await request.json();
-    const service = await Service.findByIdAndUpdate(id, body, { new: true });
+    const { _id, __v, createdAt, updatedAt, ...updateData } = body;
+    const service = await Service.findByIdAndUpdate(id, updateData, { new: true });
     if (!service) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json(service);
   } catch (error: any) {

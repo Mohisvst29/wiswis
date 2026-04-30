@@ -34,7 +34,7 @@ export default function ServicesPage() {
     }
     setLoading(true);
     try {
-      const { _id, ...payload } = formData as any;
+      const { _id, __v, createdAt, updatedAt, ...payload } = formData as any;
       const res = await fetch(editingId ? `/api/services/${editingId}` : '/api/services', {
         method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
@@ -57,40 +57,69 @@ export default function ServicesPage() {
       actionButton={<Button onClick={() => { setEditingId(null); setFormData({ titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', imageUrl: '', order: 0 }); setIsModalOpen(true); }}><Plus size={16}/> أضف خدمة</Button>}
     >
       <SectionCard title="قائمة الخدمات">
-        <table className="w-full text-right text-sm text-slate-600">
-          <thead className="bg-slate-50 border-b border-slate-200 text-slate-500">
-            <tr><th className="px-6 py-3">الصورة</th><th className="px-6 py-3">الاسم (عربي / English)</th><th className="px-6 py-3">الوصف</th><th className="px-6 py-3 text-left">إجراءات</th></tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {services.map(srv => (
-              <tr key={srv._id} className="hover:bg-slate-50/50">
-                <td className="px-6 py-4"><img src={srv.imageUrl} className="w-12 h-12 rounded-xl object-cover" /></td>
-                <td className="px-6 py-4"><div className="font-semibold text-slate-900">{srv.titleAr}</div><div className="text-slate-500 text-xs" dir="ltr">{srv.titleEn}</div></td>
-                <td className="px-6 py-4 truncate max-w-[200px]">{srv.descriptionAr}</td>
-                <td className="px-6 py-4 text-left">
-                  <div className="flex items-center justify-end gap-2">
-                    <button onClick={() => { setEditingId(srv._id); setFormData(srv); setIsModalOpen(true); }} className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><Edit2 size={16}/></button>
-                    <button onClick={() => handleDelete(srv._id)} className="p-1.5 hover:bg-red-50 text-red-500 rounded-lg"><Trash2 size={16}/></button>
+        {/* Desktop Table */}
+        <div className="hidden md:block">
+          <table className="w-full text-right text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500">
+              <tr><th className="px-6 py-3">الصورة</th><th className="px-6 py-3">الاسم (عربي / English)</th><th className="px-6 py-3">الوصف</th><th className="px-6 py-3 text-left">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {services.map(srv => (
+                <tr key={srv._id} className="hover:bg-slate-50/50">
+                  <td className="px-6 py-4"><img src={srv.imageUrl} className="w-12 h-12 rounded-xl object-cover" /></td>
+                  <td className="px-6 py-4"><div className="font-semibold text-slate-900">{srv.titleAr}</div><div className="text-slate-500 text-xs" dir="ltr">{srv.titleEn}</div></td>
+                  <td className="px-6 py-4 truncate max-w-[200px]">{srv.descriptionAr}</td>
+                  <td className="px-6 py-4 text-left">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => { setEditingId(srv._id); setFormData(srv); setIsModalOpen(true); }} className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><Edit2 size={16}/></button>
+                      <button onClick={() => handleDelete(srv._id)} className="p-1.5 hover:bg-red-50 text-red-500 rounded-lg"><Trash2 size={16}/></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3">
+          {services.map(srv => (
+            <div key={srv._id} className="bg-white border border-slate-200 rounded-xl p-4 flex gap-3">
+              <img src={srv.imageUrl} className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between">
+                  <div className="min-w-0">
+                    <div className="font-semibold text-slate-900 truncate">{srv.titleAr}</div>
+                    <div className="text-slate-500 text-xs truncate" dir="ltr">{srv.titleEn}</div>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <button onClick={() => { setEditingId(srv._id); setFormData(srv); setIsModalOpen(true); }} className="p-2 hover:bg-slate-100 rounded-lg text-slate-500"><Edit2 size={16}/></button>
+                    <button onClick={() => handleDelete(srv._id)} className="p-2 hover:bg-red-50 text-red-500 rounded-lg"><Trash2 size={16}/></button>
+                  </div>
+                </div>
+                <div className="text-slate-500 text-xs mt-1 truncate">{srv.descriptionAr}</div>
+              </div>
+            </div>
+          ))}
+          {services.length === 0 && <div className="text-center text-slate-400 py-8">لا توجد خدمات بعد</div>}
+        </div>
       </SectionCard>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-in zoom-in-95">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+            <div className="p-4 sm:p-6 border-b border-slate-100 flex justify-between items-center">
               <h2 className="text-lg font-bold">{editingId ? 'تعديل' : 'إضافة'}</h2>
               <button onClick={() => setIsModalOpen(false)}><X className="text-slate-400 hover:text-slate-900"/></button>
             </div>
-            <div className="p-6 overflow-y-auto max-h-[70vh]">
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[70vh]">
               <form id="form" onSubmit={handleSubmit} className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="w-20 h-20 bg-slate-50 rounded-xl overflow-hidden border">{formData.imageUrl ? <img src={formData.imageUrl} className="w-full h-full object-cover"/> : <ImageIcon className="m-auto mt-6 text-slate-300"/>}</div>
-                  <label className="bg-slate-100 px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer h-10 mt-5"><UploadCloud size={16}/> رفع صورة<input type="file" hidden onChange={handleImageUpload}/></label>
+                  <div className="w-20 h-20 bg-slate-50 rounded-xl overflow-hidden border flex-shrink-0">{formData.imageUrl ? <img src={formData.imageUrl} className="w-full h-full object-cover"/> : <ImageIcon className="m-auto mt-6 text-slate-300"/>}</div>
+                  <label className="bg-slate-100 px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer h-10 mt-5 text-sm">
+                    <UploadCloud size={16}/> {uploadingImage ? 'جاري الرفع...' : 'رفع صورة'}
+                    <input type="file" hidden accept="image/*" onChange={handleImageUpload} disabled={uploadingImage}/>
+                  </label>
                 </div>
                 <FormGrid>
                   <FormField label="الاسم (عربي)"><Input required value={formData.titleAr} onChange={e=>setFormData({...formData, titleAr:e.target.value})} /></FormField>
@@ -100,7 +129,7 @@ export default function ServicesPage() {
                 </FormGrid>
               </form>
             </div>
-            <div className="p-6 border-t bg-slate-50 flex justify-end gap-3"><Button variant="outline" onClick={()=>setIsModalOpen(false)}>إلغاء</Button><Button form="form" disabled={loading}>{loading?'جاري...':'حفظ'}</Button></div>
+            <div className="p-4 sm:p-6 border-t bg-slate-50 flex justify-end gap-3"><Button variant="outline" onClick={()=>setIsModalOpen(false)}>إلغاء</Button><Button form="form" disabled={loading}>{loading?'جاري...':'حفظ'}</Button></div>
           </div>
         </div>
       )}

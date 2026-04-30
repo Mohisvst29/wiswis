@@ -8,7 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [logo, setLogo] = useState('');
-  const [siteName, setSiteName] = useState('Wiswis');
+  const [siteName, setSiteName] = useState('');
   const [phones, setPhones] = useState<string[]>(['0554460672', '0530783848']);
 
   useEffect(() => {
@@ -59,7 +59,13 @@ export default function Navbar() {
           )}
         </div>
         
-        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ zIndex: 99999, display: isMobile ? 'block' : 'none', marginInlineStart: 'auto' }}>
+        <button 
+          className="mobile-menu-btn" 
+          onClick={(e) => { e.stopPropagation(); setMenuOpen(!menuOpen); }}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          type="button"
+        >
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         
@@ -67,7 +73,7 @@ export default function Navbar() {
           className={`nav-links ${menuOpen ? 'active' : ''}`}
           style={isMobile ? undefined : { justifySelf: 'center' }}
         >
-          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} style={{ display: isMobile ? 'block' : 'none', position: 'absolute', top: '20px', left: '20px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', zIndex: 100000 }}>
+          <button className="mobile-close-btn" onClick={() => setMenuOpen(false)} type="button" aria-label="Close menu">
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <a href="#" onClick={() => setMenuOpen(false)}>{t('nav_home')}</a>
@@ -78,16 +84,18 @@ export default function Navbar() {
           <a href="#contact" onClick={() => { setMenuOpen(false); window.dispatchEvent(new CustomEvent('openContactModal')); }}>{t('nav_contact')}</a>
         </nav>
         
-        <div className="nav-actions desktop-only" style={{ display: isMobile ? 'none' : 'block', justifySelf: 'end' }}>
+        <div className="nav-actions desktop-only" style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', marginRight: 'auto' }}>
           <button 
             onClick={() => window.dispatchEvent(new CustomEvent('openContactModal'))} 
-            className="btn btn-primary" 
-            style={{ padding: '0.6rem 2.2rem', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)', border: 'none', cursor: 'pointer' }}
+            className="btn btn-primary animate-pulse-glow" 
+            style={{ padding: '0.5rem 1.5rem', borderRadius: '50px', fontSize: '1rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(212, 160, 23, 0.3)', border: 'none', cursor: 'pointer', marginRight: '2rem' }}
           >
             أرسل لنا
           </button>
         </div>
       </div>
+      {/* Backdrop overlay when menu is open */}
+      <div className={`nav-overlay ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(false)} />
     </header>
   );
 }

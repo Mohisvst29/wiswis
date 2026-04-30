@@ -40,7 +40,7 @@ export default function PartnersPage() {
           {partners.map((partner) => (
             <div key={partner._id} className="group relative bg-white border border-slate-200 rounded-2xl aspect-square flex flex-col items-center justify-center p-6 shadow-sm hover:border-slate-300 transition-all">
               {partner.logoUrl ? <img src={partner.logoUrl} className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all" /> : <ImageIcon size={32} className="text-slate-300" />}
-              <button onClick={() => handleDelete(partner._id)} className="absolute top-2 left-2 bg-white text-red-500 hover:bg-red-50 p-1.5 rounded-lg shadow-sm opacity-0 group-hover:opacity-100 transition-all"><Trash2 size={14} /></button>
+              <button onClick={() => handleDelete(partner._id)} className="absolute top-2 left-2 bg-red-50 text-red-500 hover:bg-red-100 p-2 rounded-lg shadow-sm transition-all z-10"><Trash2 size={16} /></button>
             </div>
           ))}
         </div>

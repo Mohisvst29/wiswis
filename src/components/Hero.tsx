@@ -7,6 +7,7 @@ export default function Hero() {
   const { t } = useLang();
   const [slides, setSlides] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/settings')
@@ -19,7 +20,8 @@ export default function Hero() {
         } else {
           setSlides(['/assets/wiswis_hero.png']);
         }
-      });
+        setLoading(false);
+      }).catch(() => setLoading(false));
       
     setTimeout(() => {
       document.querySelectorAll('.reveal-text').forEach(el => {
@@ -35,6 +37,8 @@ export default function Hero() {
     }, 6000); // switch every 6 seconds
     return () => clearInterval(interval);
   }, [slides]);
+
+  if (loading) return <section className="hero" id="home"><div className="hero-overlay"></div></section>;
 
   return (
     <section className="hero" id="home">

@@ -29,11 +29,11 @@ export default function FloatingActions() {
   const phNumber = phone || '0500000000';
 
   return (
-    <div style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 999999, display: 'flex', flexDirection: 'column', gap: '15px' }}>
+    <div className="animate-float" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 999999, display: 'flex', flexDirection: 'column', gap: '15px' }}>
       <button 
         onClick={toggleLang} 
         title="تغيير اللغة" 
-        style={{ width: '56px', height: '56px', backgroundColor: '#141414', border: '1px solid #333', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.1rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)', cursor: 'pointer', transition: 'all 0.3s' }}
+        style={{ width: '56px', height: '56px', backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1a1a1a', fontWeight: 'bold', fontSize: '1.1rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', cursor: 'pointer', transition: 'all 0.3s' }}
       >
         {lang === 'ar' ? 'EN' : 'AR'}
       </button>

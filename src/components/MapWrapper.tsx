@@ -1,20 +1,8 @@
 "use client";
-import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
-// Fix Leaflet's default icon path issues in Next.js
-const DefaultIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = DefaultIcon;
 
 // Component to recenter map when active branch changes
 function RecenterMap({ lat, lng }: { lat: number, lng: number }) {
@@ -32,6 +20,22 @@ export default function MapWrapper({ branches, activeBranchId }: { branches: any
   const centerLat = activeBranch?.lat || defaultCenter.lat;
   const centerLng = activeBranch?.lng || defaultCenter.lng;
 
+  const [logoUrl, setLogoUrl] = useState<string>('');
+
+  useEffect(() => {
+    fetch('/api/settings').then(r => r.json()).then(data => {
+      if (data && data.logoUrl) setLogoUrl(data.logoUrl);
+    });
+  }, []);
+
+  // Create custom icon
+  const customIcon = L.icon({
+    iconUrl: logoUrl || '/favicon.ico', // Fallback to favicon if logo not loaded
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    className: 'custom-map-marker bg-white p-1 rounded-full shadow-lg border-2 border-[var(--color-primary)] object-contain'
+  });
+
   return (
     <MapContainer center={[centerLat, centerLng]} zoom={13} style={{ height: '100%', width: '100%', borderRadius: '16px' }}>
       <TileLayer
@@ -43,12 +47,18 @@ export default function MapWrapper({ branches, activeBranchId }: { branches: any
       {branches.map(b => {
         if (!b.lat || !b.lng) return null;
         return (
-          <Marker key={b._id} position={[b.lat, b.lng]}>
-            <Popup>
-              <strong>{b.nameAr}</strong><br />
-              {b.descAr}
-            </Popup>
-          </Marker>
+          <Marker 
+            key={b._id} 
+            position={[b.lat, b.lng]} 
+            icon={customIcon}
+            eventHandlers={{
+              click: () => {
+                if (b.mapUrl) {
+                  window.open(b.mapUrl, '_blank');
+                }
+              },
+            }}
+          />
         );
       })}
     </MapContainer>

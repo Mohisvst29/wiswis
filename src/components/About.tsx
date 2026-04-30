@@ -5,11 +5,22 @@ import { useLang } from '@/components/LangProvider';
 export default function About() {
   const { t } = useLang();
   const [pdfLink, setPdfLink] = useState('#');
+  const [aboutImage, setAboutImage] = useState('/assets/wiswis_about.png');
+  const [yearsExp, setYearsExp] = useState(25);
 
   useEffect(() => {
+    // Fetch settings for PDF
     fetch('/api/settings').then(r => r.json()).then(data => {
       if (data && data.certificatePdf) {
         setPdfLink(data.certificatePdf);
+      }
+    });
+
+    // Fetch about data for image and years
+    fetch('/api/about').then(r => r.json()).then(data => {
+      if (data) {
+        if (data.image) setAboutImage(data.image);
+        if (data.yearsOfExperience) setYearsExp(data.yearsOfExperience);
       }
     });
   }, []);
@@ -18,9 +29,9 @@ export default function About() {
     <section className="about" id="about">
       <div className="about-container">
         <div className="about-image-wrapper reveal-scroll left">
-          <img src="/assets/wiswis_about.png" alt="About Wiswis" className="about-img" />
-          <div className="floating-badge">
-            <span className="badge-number">25+</span>
+          <img src={aboutImage} alt="About Wiswis" className="about-img hover-lift" />
+          <div className="floating-badge animate-float">
+            <span className="badge-number">{yearsExp}+</span>
             <span className="badge-text">{t('badge_text')}</span>
           </div>
         </div>

@@ -6,6 +6,7 @@ export default function Services() {
   const { t, lang } = useLang();
   const [services, setServices] = useState<any[]>([]);
   const [whatsapp, setWhatsapp] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/settings').then(r => r.json()).then(data => {
@@ -26,7 +27,8 @@ export default function Services() {
           document.querySelectorAll('#services .reveal-scroll').forEach(el => observer.observe(el));
         }, 100);
       }
-    }).catch(() => {});
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   return (
@@ -37,7 +39,11 @@ export default function Services() {
       </div>
       
       <div className="services-grid">
-        {services.length > 0 ? (
+        {loading ? (
+          <div className="w-full col-span-full h-[300px] flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : services.length > 0 ? (
           services.map((srv, idx) => (
             <div key={srv._id} className={`service-card reveal-scroll ${idx % 3 === 1 ? 'delay-1' : idx % 3 === 2 ? 'delay-2' : ''}`}>
               <img src={srv.imageUrl} alt={lang === 'ar' ? srv.titleAr : srv.titleEn} className="service-img" />

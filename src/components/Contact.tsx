@@ -69,8 +69,8 @@ export default function Contact() {
             </div>
           </div>
 
-          <button onClick={() => setIsModalOpen(true)} className="btn btn-primary" style={{ padding: '1rem 3rem', borderRadius: '50px', fontSize: '1.2rem', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '0.8rem', boxShadow: '0 4px 20px rgba(245, 158, 11, 0.4)' }}>
-            <Send size={20} />
+          <button onClick={() => setIsModalOpen(true)} className="btn btn-primary" style={{ padding: '0.75rem 2rem', borderRadius: '50px', fontSize: '1rem', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '0.6rem', marginRight: '50px', boxShadow: '0 4px 15px rgba(212, 160, 23, 0.3)' }}>
+            <Send size={18} />
             {lang === 'ar' ? 'أرسل لنا رسالة' : 'Send us a message'}
           </button>
         </div>

@@ -1,13 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PageWrapper, SectionCard, FormGrid, FormField, Input, Button } from "@/components/ui/LayoutComponents";
-import { UploadCloud, Save, Eye } from "lucide-react";
+import { UploadCloud, Save, Eye, KeyRound } from "lucide-react";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingCert, setUploadingCert] = useState(false);
+
+  // Credentials state
+  const [credLoading, setCredLoading] = useState(false);
+  const [credMsg, setCredMsg] = useState('');
+  const [credForm, setCredForm] = useState({ currentPassword: '', newEmail: '', newPassword: '', confirmPassword: '' });
 
   useEffect(() => {
     fetch('/api/settings').then(r => r.json()).then(data => setSettings(data || {}));
@@ -32,6 +37,32 @@ export default function SettingsPage() {
     const data = await res.json();
     if (data.url) handleChange(key, data.url);
     setLoader(false);
+  };
+
+  const handleCredentialsSave = async () => {
+    setCredMsg('');
+    if (!credForm.currentPassword) { setCredMsg('⚠️ أدخل كلمة المرور الحالية'); return; }
+    if (credForm.newPassword && credForm.newPassword !== credForm.confirmPassword) { setCredMsg('⚠️ كلمة المرور الجديدة غير متطابقة'); return; }
+    if (!credForm.newEmail && !credForm.newPassword) { setCredMsg('⚠️ أدخل إيميل جديد أو كلمة مرور جديدة'); return; }
+
+    setCredLoading(true);
+    try {
+      const res = await fetch('/api/auth/credentials', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword: credForm.currentPassword, newEmail: credForm.newEmail || undefined, newPassword: credForm.newPassword || undefined })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setCredMsg('✅ ' + data.message);
+        setCredForm({ currentPassword: '', newEmail: '', newPassword: '', confirmPassword: '' });
+      } else {
+        setCredMsg('❌ ' + (data.error || 'حدث خطأ'));
+      }
+    } catch {
+      setCredMsg('❌ حدث خطأ في الاتصال');
+    }
+    setCredLoading(false);
   };
 
   return (
@@ -121,7 +152,30 @@ export default function SettingsPage() {
         </FormGrid>
       </SectionCard>
 
-      <SectionCard title="5. السجل التجاري والشهادات" description="رابط جوجل درايف أو رفع ملف PDF">
+      <SectionCard title="5. روابط التواصل الاجتماعي" description="ضع الروابط الخاصة بحساباتك على منصات التواصل">
+        <FormGrid>
+          <FormField label="تيك توك (TikTok)">
+            <Input dir="ltr" value={settings.socialTiktok || ''} onChange={e => handleChange('socialTiktok', e.target.value)} placeholder="https://tiktok.com/@..." />
+          </FormField>
+          <FormField label="إنستغرام (Instagram)">
+            <Input dir="ltr" value={settings.socialInstagram || ''} onChange={e => handleChange('socialInstagram', e.target.value)} placeholder="https://instagram.com/..." />
+          </FormField>
+          <FormField label="فيسبوك (Facebook)">
+            <Input dir="ltr" value={settings.socialFacebook || ''} onChange={e => handleChange('socialFacebook', e.target.value)} placeholder="https://facebook.com/..." />
+          </FormField>
+          <FormField label="إكس (Twitter/X)">
+            <Input dir="ltr" value={settings.socialTwitter || ''} onChange={e => handleChange('socialTwitter', e.target.value)} placeholder="https://x.com/..." />
+          </FormField>
+          <FormField label="سناب شات (Snapchat)">
+            <Input dir="ltr" value={settings.socialSnapchat || ''} onChange={e => handleChange('socialSnapchat', e.target.value)} placeholder="https://snapchat.com/add/..." />
+          </FormField>
+          <FormField label="لينكد إن (LinkedIn)">
+            <Input dir="ltr" value={settings.socialLinkedin || ''} onChange={e => handleChange('socialLinkedin', e.target.value)} placeholder="https://linkedin.com/company/..." />
+          </FormField>
+        </FormGrid>
+      </SectionCard>
+
+      <SectionCard title="6. السجل التجاري والشهادات" description="رابط جوجل درايف أو رفع ملف PDF">
         <FormGrid>
           <FormField label="رابط ملف السجل التجاري (PDF) أو Google Drive" className="md:col-span-2">
             <div className="flex flex-col md:flex-row gap-4">
@@ -147,6 +201,31 @@ export default function SettingsPage() {
             </div>
           </FormField>
         </FormGrid>
+      </SectionCard>
+
+      <SectionCard title="7. بيانات تسجيل الدخول" description="تغيير اسم المستخدم (الإيميل) وكلمة المرور للوحة التحكم">
+        <div className="space-y-6">
+          <FormGrid>
+            <FormField label="كلمة المرور الحالية (مطلوبة للتأكيد)">
+              <Input type="password" value={credForm.currentPassword} onChange={e => setCredForm({...credForm, currentPassword: e.target.value})} placeholder="أدخل كلمة المرور الحالية" />
+            </FormField>
+            <div></div>
+            <FormField label="البريد الإلكتروني الجديد (اختياري)">
+              <Input dir="ltr" type="email" value={credForm.newEmail} onChange={e => setCredForm({...credForm, newEmail: e.target.value})} placeholder="admin@example.com" />
+            </FormField>
+            <div></div>
+            <FormField label="كلمة المرور الجديدة (اختياري)">
+              <Input type="password" value={credForm.newPassword} onChange={e => setCredForm({...credForm, newPassword: e.target.value})} placeholder="كلمة المرور الجديدة" />
+            </FormField>
+            <FormField label="تأكيد كلمة المرور الجديدة">
+              <Input type="password" value={credForm.confirmPassword} onChange={e => setCredForm({...credForm, confirmPassword: e.target.value})} placeholder="أعد كتابة كلمة المرور" />
+            </FormField>
+          </FormGrid>
+          {credMsg && <div className={`p-3 rounded-xl text-sm font-medium ${credMsg.startsWith('✅') ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>{credMsg}</div>}
+          <Button onClick={handleCredentialsSave} disabled={credLoading} variant="outline">
+            <KeyRound size={16}/> {credLoading ? 'جاري التحديث...' : 'تحديث بيانات الدخول'}
+          </Button>
+        </div>
       </SectionCard>
     </PageWrapper>
   );

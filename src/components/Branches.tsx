@@ -38,10 +38,10 @@ export default function Branches() {
       </div>
       
       {/* Regions Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mb-10 px-4">
+      <div className="filter-group" style={{ justifyContent: 'center' }}>
         <button 
           onClick={() => setActiveRegion('all')}
-          className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all border ${activeRegion === 'all' ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/30' : 'bg-transparent border-white/20 text-gray-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'}`}
+          className={`filter-btn ${activeRegion === 'all' ? 'active' : ''}`}
         >
           {lang === 'ar' ? 'جميع المناطق' : 'All Regions'}
         </button>
@@ -49,7 +49,7 @@ export default function Branches() {
           <button 
             key={i}
             onClick={() => setActiveRegion(region)}
-            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all border ${activeRegion === region ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/30' : 'bg-transparent border-white/20 text-gray-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'}`}
+            className={`filter-btn ${activeRegion === region ? 'active' : ''}`}
           >
             {region}
           </button>

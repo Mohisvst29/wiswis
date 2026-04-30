@@ -5,11 +5,13 @@ import { useLang } from '@/components/LangProvider';
 export default function News() {
   const { t, lang } = useLang();
   const [news, setNews] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/news').then(r => r.json()).then(data => {
       if (data && data.length > 0) setNews(data);
-    }).catch(() => {});
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   return (
@@ -20,10 +22,14 @@ export default function News() {
       </div>
 
       <div className="news-layout reveal-scroll">
-        {news.length > 0 ? (
+        {loading ? (
+          <div className="w-full h-[400px] flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : news.length > 0 ? (
           <>
             {news.filter(n => n.isFeatured).slice(0, 1).map((n) => (
-              <div key={n._id} className="news-featured">
+              <div key={n._id} className="news-featured hover-lift">
                 <div className="news-img-wrapper">
                   <img src={n.imageUrl} alt={lang === 'ar' ? n.titleAr : n.titleEn} />
                 </div>
@@ -37,7 +43,7 @@ export default function News() {
             ))}
             <div className="news-grid">
               {news.filter(n => !n.isFeatured).slice(0, 2).map((n) => (
-                <div key={n._id} className="news-item">
+                <div key={n._id} className="news-item hover-lift">
                   <div className="news-img-wrapper">
                     <img src={n.imageUrl} alt={lang === 'ar' ? n.titleAr : n.titleEn} />
                   </div>
@@ -52,7 +58,7 @@ export default function News() {
           </>
         ) : (
           <>
-            <div className="news-featured">
+            <div className="news-featured hover-lift">
               <div className="news-img-wrapper">
                 <img src="/assets/wiswis_about.png" alt="Featured News" />
               </div>
@@ -64,7 +70,7 @@ export default function News() {
               </div>
             </div>
             <div className="news-grid">
-              <div className="news-item">
+              <div className="news-item hover-lift">
                 <div className="news-img-wrapper">
                   <img src="/assets/wiswis_services.png" alt="News 2" />
                 </div>
@@ -74,7 +80,7 @@ export default function News() {
                   <a href="#" className="read-more">{t('read_more')}</a>
                 </div>
               </div>
-              <div className="news-item">
+              <div className="news-item hover-lift">
                 <div className="news-img-wrapper">
                   <img src="/assets/wiswis_hero.png" alt="News 3" />
                 </div>
