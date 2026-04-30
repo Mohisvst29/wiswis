@@ -13,7 +13,7 @@ export default function MessagesPage() {
 
   return (
     <PageWrapper title="صندوق الرسائل (Messages)">
-      <SectionCard className="p-0">
+      <SectionCard title="الرسائل الواردة" className="p-0">
         {messages.length === 0 ? (
           <div className="p-12 text-center flex flex-col items-center">
             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4"><Inbox size={28} className="text-slate-300" /></div>
