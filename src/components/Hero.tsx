@@ -37,8 +37,8 @@ export default function Hero() {
   }, [slides]);
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden" id="home">
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+    <section className="hero" id="home">
+      <div className="hero-bg">
         <AnimatePresence initial={false}>
           {slides.length > 0 && (
             slides[currentIndex].match(/\.(mp4|webm|ogg)$/i) ? (
@@ -50,8 +50,7 @@ export default function Hero() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+                className="hero-image"
               />
             ) : (
               <motion.img
@@ -61,16 +60,15 @@ export default function Hero() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+                className="hero-image"
               />
             )
           )}
         </AnimatePresence>
-        <div className="absolute inset-0 w-full h-full bg-black/60 z-10"></div>
+        <div className="hero-overlay" style={{ background: 'rgba(0,0,0,0.6)' }}></div>
       </div>
       
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center">
+      <div className="hero-content">
         <h1 className="hero-title reveal-text">{t('hero_title')}</h1>
         <p className="hero-subtitle reveal-text delay-1">{t('hero_sub')}</p>
         <div className="hero-buttons reveal-text delay-2">
@@ -83,12 +81,12 @@ export default function Hero() {
       
       {/* Slide Indicators */}
       {slides.length > 1 && (
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+        <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 20 }}>
           {slides.map((_, i) => (
             <button 
               key={i} 
               onClick={() => setCurrentIndex(i)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}`}
+              style={{ width: '12px', height: '12px', borderRadius: '50%', border: 'none', cursor: 'pointer', transition: 'all 0.3s', backgroundColor: i === currentIndex ? '#fff' : 'rgba(255,255,255,0.4)', transform: i === currentIndex ? 'scale(1.25)' : 'scale(1)' }}
             ></button>
           ))}
         </div>
