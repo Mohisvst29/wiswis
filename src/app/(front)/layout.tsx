@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { LangProvider } from "@/components/LangProvider";
 import DynamicStyles from "@/components/DynamicStyles";
 

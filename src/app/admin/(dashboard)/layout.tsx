@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import "./admin.css";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, Paintbrush, ImageIcon, Layers, MapPin, FileText, Users, MessageSquare, LogOut, Menu, X, Save } from "lucide-react";
@@ -28,7 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div dir="rtl" className="flex h-screen bg-[#F9FAFB] text-gray-900 font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#F9FAFB] text-gray-900 font-sans overflow-hidden">
       {/* Sidebar Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-gray-900/50 z-40 md:hidden" onClick={() => setSidebarOpen(false)}></div>
