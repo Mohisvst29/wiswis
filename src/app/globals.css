@@ -1049,16 +1049,20 @@ html[dir="rtl"] .form-group label {
         justify-content: center;
     }
     .about-features {
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        margin: 0 auto 2.5rem auto;
+        padding: 0 !important;
+        margin: 0 auto 2.5rem auto !important;
+        display: table !important;
     }
     .about-features li {
-        width: 100%;
-        justify-content: center;
+        display: flex !important;
+        justify-content: flex-start !important;
+        width: auto !important;
+    }
+    html[dir="rtl"] .about-features {
+        transform: translateX(15px);
+    }
+    html[dir="ltr"] .about-features {
+        transform: translateX(-15px);
     }
     .floating-badge {
         width: 100px;
