@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PageWrapper, SectionCard, FormGrid, FormField, Input, Button } from "@/components/ui/LayoutComponents";
-import { UploadCloud, Save } from "lucide-react";
+import { UploadCloud, Save, Eye } from "lucide-react";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState<any>({});
@@ -36,79 +36,105 @@ export default function SettingsPage() {
 
   return (
     <PageWrapper 
-      title="الإعدادات (Settings)" 
-      description="إدارة إعدادات الموقع، الهوية، الألوان وبيانات التواصل."
-      actionButton={<Button onClick={handleSave} disabled={loading}><Save size={16}/> {loading ? "جاري الحفظ..." : "حفظ التغييرات"}</Button>}
+      title="الإعدادات والمظهر" 
+      description="التحكم الكامل في هوية الموقع وبيانات التواصل"
+      actionButton={<Button onClick={handleSave} disabled={loading}><Save size={18}/> {loading ? "جاري الحفظ..." : "حفظ التعديلات"}</Button>}
     >
-      <SectionCard title="الهوية البصرية (Branding)" description="تحديث الشعار وأبعاده.">
-        <div className="flex flex-col sm:flex-row gap-6">
-          <div className="w-32 h-32 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center p-4 relative">
-            {settings.logoUrl ? <img src={settings.logoUrl} className="max-h-full max-w-full object-contain" /> : <span className="text-slate-400 text-sm">لا يوجد شعار</span>}
-            {uploadingLogo && <div className="absolute inset-0 bg-white/80 flex items-center justify-center"><div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div></div>}
+      <SectionCard title="1. الهوية البصرية" description="تحديث الشعار والتحكم بأبعاده">
+        <FormGrid>
+          <FormField label="رفع الشعار الجديد">
+            <div className="flex items-center gap-4">
+              <div className="w-24 h-24 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center p-2 relative">
+                {settings.logoUrl ? <img src={settings.logoUrl} className="max-h-full max-w-full object-contain" /> : <span className="text-gray-400 text-xs">لا يوجد</span>}
+                {uploadingLogo && <div className="absolute inset-0 bg-white/80 flex items-center justify-center"><div className="w-5 h-5 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div></div>}
+              </div>
+              <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 h-11 rounded-xl text-sm font-semibold transition-colors inline-flex items-center gap-2">
+                <UploadCloud size={18} /> تصفح الملفات
+                <input type="file" className="hidden" accept="image/*" onChange={(e) => uploadFile(e, 'logoUrl', setUploadingLogo)} />
+              </label>
+            </div>
+          </FormField>
+          <div className="space-y-6">
+            <FormField label="عرض الشعار (px)">
+              <Input dir="ltr" value={settings.logoWidth || ''} onChange={e => handleChange('logoWidth', e.target.value)} placeholder="مثال: 150px" />
+            </FormField>
+            <FormField label="طول الشعار (px)">
+              <Input dir="ltr" value={settings.logoHeight || ''} onChange={e => handleChange('logoHeight', e.target.value)} placeholder="مثال: auto" />
+            </FormField>
           </div>
-          <div className="flex-1 space-y-6">
-            <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors inline-flex items-center gap-2">
-              <UploadCloud size={16} /> ارفع الشعار
-              <input type="file" className="hidden" accept="image/*" onChange={(e) => uploadFile(e, 'logoUrl', setUploadingLogo)} />
-            </label>
-            <FormGrid>
-              <FormField label="عرض الشعار (px أو %)"><Input dir="ltr" value={settings.logoWidth || ''} onChange={e => handleChange('logoWidth', e.target.value)} placeholder="150px" /></FormField>
-              <FormField label="طول الشعار (px أو %)"><Input dir="ltr" value={settings.logoHeight || ''} onChange={e => handleChange('logoHeight', e.target.value)} placeholder="auto" /></FormField>
-            </FormGrid>
-          </div>
-        </div>
+        </FormGrid>
       </SectionCard>
 
-      <SectionCard title="الألوان والخطوط (Colors & Fonts)">
+      <SectionCard title="2. الألوان" description="تخصيص الهوية اللونية للموقع">
         <FormGrid>
-          <FormField label="اللون الرئيسي (Primary Color)">
-            <div className="flex gap-3 h-10">
-              <input type="color" value={settings.primaryColor || '#bd121c'} onChange={e => handleChange('primaryColor', e.target.value)} className="h-full w-12 rounded-xl border border-slate-300 p-1" />
-              <Input dir="ltr" value={settings.primaryColor || '#bd121c'} onChange={e => handleChange('primaryColor', e.target.value)} className="uppercase font-mono" />
+          <FormField label="اللون الأساسي">
+            <div className="flex gap-3 h-11">
+              <input type="color" value={settings.primaryColor || '#7A0C16'} onChange={e => handleChange('primaryColor', e.target.value)} className="h-full w-14 rounded-xl border border-gray-300 p-1 cursor-pointer bg-white" />
+              <Input dir="ltr" value={settings.primaryColor || '#7A0C16'} onChange={e => handleChange('primaryColor', e.target.value)} className="uppercase font-mono text-center w-full" />
             </div>
           </FormField>
-          <FormField label="لون العناوين (Headings)">
-            <div className="flex gap-3 h-10">
-              <input type="color" value={settings.headingColor || '#ffffff'} onChange={e => handleChange('headingColor', e.target.value)} className="h-full w-12 rounded-xl border border-slate-300 p-1" />
-              <Input dir="ltr" value={settings.headingColor || '#ffffff'} onChange={e => handleChange('headingColor', e.target.value)} className="uppercase font-mono" />
+          <FormField label="لون العناوين">
+            <div className="flex gap-3 h-11">
+              <input type="color" value={settings.headingColor || '#ffffff'} onChange={e => handleChange('headingColor', e.target.value)} className="h-full w-14 rounded-xl border border-gray-300 p-1 cursor-pointer bg-white" />
+              <Input dir="ltr" value={settings.headingColor || '#ffffff'} onChange={e => handleChange('headingColor', e.target.value)} className="uppercase font-mono text-center w-full" />
             </div>
           </FormField>
-          <FormField label="لون النصوص (Text)">
-            <div className="flex gap-3 h-10">
-              <input type="color" value={settings.textColor || '#d1d5db'} onChange={e => handleChange('textColor', e.target.value)} className="h-full w-12 rounded-xl border border-slate-300 p-1" />
-              <Input dir="ltr" value={settings.textColor || '#d1d5db'} onChange={e => handleChange('textColor', e.target.value)} className="uppercase font-mono" />
+          <FormField label="لون النصوص">
+            <div className="flex gap-3 h-11">
+              <input type="color" value={settings.textColor || '#d1d5db'} onChange={e => handleChange('textColor', e.target.value)} className="h-full w-14 rounded-xl border border-gray-300 p-1 cursor-pointer bg-white" />
+              <Input dir="ltr" value={settings.textColor || '#d1d5db'} onChange={e => handleChange('textColor', e.target.value)} className="uppercase font-mono text-center w-full" />
             </div>
           </FormField>
-          <FormField label="نوع الخط العربي (Font)">
-            <select value={settings.fontFamily || 'Tajawal'} onChange={e => handleChange('fontFamily', e.target.value)} className="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 shadow-sm">
-              <option value="Tajawal">Tajawal</option><option value="Cairo">Cairo</option><option value="Almarai">Almarai</option>
+        </FormGrid>
+      </SectionCard>
+
+      <SectionCard title="3. الخطوط" description="اختيار الخط العربي للموقع">
+        <FormGrid>
+          <FormField label="نوع الخط العربي">
+            <select value={settings.fontFamily || 'Tajawal'} onChange={e => handleChange('fontFamily', e.target.value)} className="w-full h-11 bg-white border border-gray-300 rounded-xl px-4 text-sm text-gray-900 outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 shadow-sm cursor-pointer">
+              <option value="Tajawal">Tajawal</option>
+              <option value="Cairo">Cairo</option>
+              <option value="Almarai">Almarai</option>
+              <option value="IBM Plex Sans Arabic">IBM Plex Sans Arabic</option>
             </select>
           </FormField>
         </FormGrid>
       </SectionCard>
 
-      <SectionCard title="التواصل (Contact)" description="البيانات التي تظهر في تذييل الموقع.">
+      <SectionCard title="4. بيانات التواصل" description="الأرقام والإيميلات لخدمة العملاء">
         <FormGrid>
-          <FormField label="اسم الموقع (عربي)"><Input value={settings.siteNameAr || ''} onChange={e => handleChange('siteNameAr', e.target.value)} /></FormField>
-          <FormField label="اسم الموقع (إنجليزي)"><Input dir="ltr" value={settings.siteNameEn || ''} onChange={e => handleChange('siteNameEn', e.target.value)} /></FormField>
-          <FormField label="البريد الإلكتروني (Email)"><Input dir="ltr" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} /></FormField>
-          <FormField label="رقم الجوال (Phone)"><Input dir="ltr" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} /></FormField>
+          <FormField label="رقم الجوال">
+            <Input dir="ltr" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} placeholder="+966..." />
+          </FormField>
+          <FormField label="البريد الإلكتروني">
+            <Input dir="ltr" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} placeholder="info@wiswis.com" />
+          </FormField>
+          <FormField label="اسم الموقع (عربي)">
+            <Input value={settings.siteNameAr || ''} onChange={e => handleChange('siteNameAr', e.target.value)} />
+          </FormField>
+          <FormField label="اسم الموقع (إنجليزي)">
+            <Input dir="ltr" value={settings.siteNameEn || ''} onChange={e => handleChange('siteNameEn', e.target.value)} />
+          </FormField>
         </FormGrid>
       </SectionCard>
 
-      <SectionCard title="السجل التجاري (Certificate)" description="رفع السجل التجاري كملف PDF ليتاح للعملاء.">
-        <div className="flex items-center gap-6">
-          <label className="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors inline-flex items-center gap-2">
-            {uploadingCert ? <div className="w-4 h-4 border-2 border-slate-700 border-t-transparent rounded-full animate-spin"></div> : <UploadCloud size={16} />}
-            ارفع ملف PDF
-            <input type="file" className="hidden" accept="application/pdf" onChange={(e) => uploadFile(e, 'certificatePdf', setUploadingCert)} disabled={uploadingCert} />
-          </label>
-          {settings.certificatePdf && (
-            <div className="flex items-center gap-3 bg-blue-50 text-blue-700 px-4 py-2 rounded-xl text-sm font-medium">
-              تم الرفع بنجاح - <a href={settings.certificatePdf} target="_blank" className="underline hover:text-blue-900">معاينة الملف</a>
+      <SectionCard title="5. السجل التجاري والشهادات" description="رفع ملفات PDF للمصداقية">
+        <FormGrid>
+          <FormField label="ملف السجل التجاري (PDF)">
+            <div className="flex items-center gap-4">
+              <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 h-11 rounded-xl text-sm font-semibold transition-colors inline-flex items-center justify-center gap-2 w-full md:w-auto">
+                {uploadingCert ? <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div> : <UploadCloud size={18} />}
+                رفع ملف
+                <input type="file" className="hidden" accept="application/pdf" onChange={(e) => uploadFile(e, 'certificatePdf', setUploadingCert)} disabled={uploadingCert} />
+              </label>
+              {settings.certificatePdf && (
+                <a href={settings.certificatePdf} target="_blank" className="flex items-center justify-center gap-2 h-11 px-4 bg-gray-50 text-gray-700 font-semibold text-sm border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors">
+                  <Eye size={18}/> عرض الملف
+                </a>
+              )}
             </div>
-          )}
-        </div>
+          </FormField>
+        </FormGrid>
       </SectionCard>
     </PageWrapper>
   );

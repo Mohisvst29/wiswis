@@ -28,18 +28,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div dir="rtl" className="flex h-screen bg-[#f0f0f1] text-[#3c434a] font-sans overflow-hidden">
+    <div dir="rtl" className="flex h-screen bg-[#F9FAFB] text-gray-900 font-sans overflow-hidden">
       {/* Sidebar Overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-[#000]/50 z-40 md:hidden" onClick={() => setSidebarOpen(false)}></div>
+        <div className="fixed inset-0 bg-gray-900/50 z-40 md:hidden" onClick={() => setSidebarOpen(false)}></div>
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 right-0 z-50 w-[160px] bg-[#1d2327] text-white transition-transform duration-300 ease-in-out flex flex-col md:static ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0`}>
-        <div className="flex items-center h-[32px] px-4 bg-[#1d2327]">
-          {/* Empty spacer for WP admin bar */}
+      <aside className={`fixed inset-y-0 right-0 z-50 w-[240px] bg-white border-l border-gray-200 transition-transform duration-300 ease-in-out flex flex-col md:static ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0`}>
+        <div className="flex items-center justify-center h-[64px] border-b border-gray-200">
+          <span className="text-xl font-bold tracking-tight text-gray-900">وسوس لخدمات الوقود</span>
+          <button className="md:hidden absolute left-4 text-gray-500 hover:text-gray-900" onClick={() => setSidebarOpen(false)}>
+            <X size={20} />
+          </button>
         </div>
-        <nav className="flex-1 py-3 custom-scrollbar space-y-0">
+        <nav className="flex-1 py-4 px-3 custom-scrollbar space-y-1">
           {menuItems.map((item) => {
             const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
             return (
@@ -47,9 +50,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={item.name} 
                 href={item.href} 
                 onClick={() => setSidebarOpen(false)} 
-                className={`flex items-center gap-3 px-4 py-2 text-[13px] transition-colors relative ${isActive ? 'bg-[#2271b1] text-white' : 'text-[#f0f0f1] hover:bg-[#2c3338] hover:text-[#72aee6]'}`}
+                className={`flex items-center gap-3 px-3 py-3 text-sm font-semibold rounded-xl transition-colors ${isActive ? 'bg-red-50 text-red-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
               >
-                <item.icon size={18} className={isActive ? 'text-white' : 'text-[#a7aaad]'} />
+                <item.icon size={20} className={isActive ? 'text-red-700' : 'text-gray-400'} />
                 {item.name}
               </Link>
             );
@@ -58,27 +61,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f0f0f1]">
-        {/* WP Topbar (Admin Bar) */}
-        <header className="h-[32px] bg-[#1d2327] text-white flex items-center justify-between px-4 z-10 sticky top-0 md:flex">
-          <div className="flex items-center gap-4 h-full">
-            <button className="md:hidden text-white/70 hover:text-white" onClick={() => setSidebarOpen(true)}>
-              <Menu size={18} />
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F9FAFB]">
+        {/* Topbar */}
+        <header className="h-[64px] bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10 sticky top-0 md:flex">
+          <div className="flex items-center gap-4">
+            <button className="md:hidden text-gray-500 hover:text-gray-900" onClick={() => setSidebarOpen(true)}>
+              <Menu size={20} />
             </button>
-            <div className="flex items-center gap-2 h-full hover:bg-[#2c3338] px-2 cursor-pointer transition-colors">
-              <span className="text-[13px]">وسوس لخدمات الوقود</span>
-            </div>
+            <div className="text-sm font-semibold text-gray-500">لوحة التحكم الإدارية</div>
           </div>
-          <div className="flex items-center gap-2 h-full hover:bg-[#2c3338] px-2 cursor-pointer transition-colors" onClick={handleLogout}>
-            <span className="text-[13px]">مرحباً، مدير</span>
+          <div className="flex items-center gap-4">
+            <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors">
+              <LogOut size={16} />
+              تسجيل خروج
+            </button>
           </div>
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar">
-          <div className="max-w-[1200px]">
-            {children}
-          </div>
+        <main className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+          {children}
         </main>
       </div>
     </div>
