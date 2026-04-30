@@ -1048,6 +1048,9 @@ html[dir="rtl"] .form-group label {
     .about-buttons {
         justify-content: center;
     }
+    .about-features li {
+        justify-content: center;
+    }
     .floating-badge {
         width: 100px;
         height: 100px;
