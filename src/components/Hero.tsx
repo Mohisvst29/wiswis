@@ -9,17 +9,15 @@ export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch('/api/settings?key=heroSlides')
+    fetch('/api/settings')
       .then(r => r.json())
       .then(data => {
-        if (data && data.value && Array.isArray(data.value) && data.value.length > 0) {
-          setSlides(data.value);
+        if (data && data.heroSlides && Array.isArray(data.heroSlides) && data.heroSlides.length > 0) {
+          setSlides(data.heroSlides);
+        } else if (data && data.heroBgUrl) {
+          setSlides([data.heroBgUrl]);
         } else {
-          // Check for single background fallback
-          fetch('/api/settings?key=heroBgUrl').then(r => r.json()).then(d => {
-            if (d && d.value) setSlides([d.value]);
-            else setSlides(['/assets/wiswis_hero.png']);
-          });
+          setSlides(['/assets/wiswis_hero.png']);
         }
       });
       

@@ -118,20 +118,29 @@ export default function SettingsPage() {
         </FormGrid>
       </SectionCard>
 
-      <SectionCard title="5. السجل التجاري والشهادات" description="رفع ملفات PDF للمصداقية">
+      <SectionCard title="5. السجل التجاري والشهادات" description="رابط جوجل درايف أو رفع ملف PDF">
         <FormGrid>
-          <FormField label="ملف السجل التجاري (PDF)">
-            <div className="flex items-center gap-4">
-              <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 h-11 rounded-xl text-sm font-semibold transition-colors inline-flex items-center justify-center gap-2 w-full md:w-auto">
-                {uploadingCert ? <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div> : <UploadCloud size={18} />}
-                رفع ملف
-                <input type="file" className="hidden" accept="application/pdf" onChange={(e) => uploadFile(e, 'certificatePdf', setUploadingCert)} disabled={uploadingCert} />
-              </label>
-              {settings.certificatePdf && (
-                <a href={settings.certificatePdf} target="_blank" className="flex items-center justify-center gap-2 h-11 px-4 bg-gray-50 text-gray-700 font-semibold text-sm border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors">
-                  <Eye size={18}/> عرض الملف
-                </a>
-              )}
+          <FormField label="رابط ملف السجل التجاري (PDF) أو Google Drive" className="md:col-span-2">
+            <div className="flex flex-col md:flex-row gap-4">
+              <Input 
+                dir="ltr" 
+                value={settings.certificatePdf || ''} 
+                onChange={e => handleChange('certificatePdf', e.target.value)} 
+                placeholder="https://drive.google.com/file/d/..." 
+                className="flex-1"
+              />
+              <div className="flex gap-2">
+                <label className="cursor-pointer bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 h-11 rounded-xl text-sm font-semibold transition-colors inline-flex items-center justify-center gap-2 flex-shrink-0">
+                  {uploadingCert ? <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div> : <UploadCloud size={18} />}
+                  رفع من الجهاز
+                  <input type="file" className="hidden" accept="application/pdf" onChange={(e) => uploadFile(e, 'certificatePdf', setUploadingCert)} disabled={uploadingCert} />
+                </label>
+                {settings.certificatePdf && (
+                  <a href={settings.certificatePdf} target="_blank" className="flex items-center justify-center gap-2 h-11 px-4 bg-red-50 text-red-700 font-semibold text-sm border border-red-100 rounded-xl hover:bg-red-100 transition-colors flex-shrink-0">
+                    <Eye size={18}/> تجربة الرابط
+                  </a>
+                )}
+              </div>
             </div>
           </FormField>
         </FormGrid>
