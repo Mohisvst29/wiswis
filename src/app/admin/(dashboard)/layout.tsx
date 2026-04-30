@@ -17,8 +17,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const menuItems = [
     { name: "الرئيسية", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "الإعدادات والمظهر", href: "/admin/settings", icon: Paintbrush },
+    { name: "الصفحة الرئيسية", href: "/admin/home", icon: ImageIcon },
     { name: "مدير الوسائط", href: "/admin/media", icon: ImageIcon },
-    { name: "إدارة الهيرو", href: "/admin/hero", icon: ImageIcon },
     { name: "الخدمات", href: "/admin/services", icon: Layers },
     { name: "المحطات والفروع", href: "/admin/branches", icon: MapPin },
     { name: "الأخبار والمقالات", href: "/admin/news", icon: FileText },
