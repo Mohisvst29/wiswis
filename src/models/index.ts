@@ -16,6 +16,7 @@ const BranchSchema = new mongoose.Schema({
   descAr: { type: String, required: true },
   cityEn: { type: String, required: true },
   cityAr: { type: String, required: true },
+  mapUrl: { type: String },
   lat: { type: Number },
   lng: { type: Number },
   isActive: { type: Boolean, default: true }

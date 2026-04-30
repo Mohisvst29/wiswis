@@ -1,5 +1,6 @@
 @import "tailwindcss";
-
+@source "../../../src/app/admin";
+@source "../../../src/components";
 @layer base {
   /* Prevent preflight from destroying frontend if leaked */
   body {
