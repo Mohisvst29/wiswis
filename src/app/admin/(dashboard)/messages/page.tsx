@@ -7,7 +7,7 @@ export default function MessagesPage() {
   const [messages, setMessages] = useState<any[]>([]);
 
   useEffect(() => { fetchMessages(); }, []);
-  const fetchMessages = async () => { const res = await fetch('/api/contact'); setMessages(await res.json() || []); };
+  const fetchMessages = async () => { const res = await fetch('/api/contact'); const data = await res.json(); setMessages(Array.isArray(data) ? data : []); };
   const markAsRead = async (id: string) => { await fetch(`/api/contact/${id}`, { method: 'PUT' }); fetchMessages(); };
   const handleDelete = async (id: string) => { if (confirm('حذف؟')) { await fetch(`/api/contact/${id}`, { method: 'DELETE' }); fetchMessages(); } };
 

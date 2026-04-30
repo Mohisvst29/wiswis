@@ -22,8 +22,8 @@ export default function HomePageAdmin() {
     });
     // Fetch About Data
     fetch('/api/about').then(r => r.json()).then(data => {
-      if (data) setAbout(data);
-    });
+      if (data && !data.error && data.title) setAbout(data);
+    }).catch(err => console.error("Error fetching about data:", err));
   }, []);
 
   const handleHeroUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

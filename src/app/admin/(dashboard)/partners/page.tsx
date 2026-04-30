@@ -11,7 +11,7 @@ export default function PartnersPage() {
   const [formData, setFormData] = useState({ name: '', logoUrl: '', order: 0 });
 
   useEffect(() => { fetchPartners(); }, []);
-  const fetchPartners = async () => { const res = await fetch('/api/partners'); setPartners(await res.json() || []); };
+  const fetchPartners = async () => { const res = await fetch('/api/partners'); const data = await res.json(); setPartners(Array.isArray(data) ? data : []); };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
