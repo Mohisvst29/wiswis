@@ -20,7 +20,7 @@ export default function Partners() {
   }, []);
 
   return (
-    <section className="py-20 bg-background relative overflow-hidden" style={{ direction: dir }}>
+    <section className="py-20 bg-[#0a0a0a] relative overflow-hidden" id="partners" style={{ direction: dir }}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 mb-4 block">

@@ -37,8 +37,8 @@ export default function Hero() {
   }, [slides]);
 
   return (
-    <section className="hero" id="home">
-      <div className="hero-bg overflow-hidden absolute inset-0 w-full h-full z-0">
+    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden" id="home">
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
         <AnimatePresence initial={false}>
           {slides.length > 0 && (
             slides[currentIndex].match(/\.(mp4|webm|ogg)$/i) ? (
@@ -51,6 +51,7 @@ export default function Hero() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute inset-0 w-full h-full object-cover"
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
               />
             ) : (
               <motion.img
@@ -61,14 +62,16 @@ export default function Hero() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="absolute inset-0 w-full h-full object-cover"
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
               />
             )
           )}
         </AnimatePresence>
-        <div className="hero-overlay"></div>
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/80 via-black/40 to-[#0a0a0a] z-10"></div>
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/30 to-black/60 z-10"></div>
       </div>
       
-      <div className="hero-content relative z-10">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center">
         <h1 className="hero-title reveal-text">{t('hero_title')}</h1>
         <p className="hero-subtitle reveal-text delay-1">{t('hero_sub')}</p>
         <div className="hero-buttons reveal-text delay-2">
