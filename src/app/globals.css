@@ -913,6 +913,25 @@ html[dir="rtl"] .form-group label {
     border-top: 1px solid rgba(255,255,255,0.05);
 }
 
+.reveal-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-text.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-text.delay-1 {
+    transition-delay: 0.2s;
+}
+
+.reveal-text.delay-2 {
+    transition-delay: 0.4s;
+}
+
 .footer-content {
     max-width: var(--container-width);
     margin: 0 auto;
