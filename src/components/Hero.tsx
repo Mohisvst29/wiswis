@@ -46,8 +46,8 @@ export default function Hero() {
                 key={currentIndex}
                 src={slides[currentIndex]}
                 autoPlay loop muted playsInline
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="hero-image"
@@ -56,8 +56,8 @@ export default function Hero() {
               <motion.img
                 key={currentIndex}
                 src={slides[currentIndex]}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 className="hero-image"
