@@ -10,6 +10,17 @@ export default function Services() {
     fetch('/api/services').then(r => r.json()).then(data => {
       if (data && data.length > 0) {
         setServices(data);
+        setTimeout(() => {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+          document.querySelectorAll('#services .reveal-scroll').forEach(el => observer.observe(el));
+        }, 100);
       }
     }).catch(() => {});
   }, []);
