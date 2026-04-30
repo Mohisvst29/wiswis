@@ -67,8 +67,7 @@ export default function Hero() {
             )
           )}
         </AnimatePresence>
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/80 via-black/40 to-[#0a0a0a] z-10"></div>
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-900/30 to-black/60 z-10"></div>
+        <div className="absolute inset-0 w-full h-full bg-black/60 z-10"></div>
       </div>
       
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center">
