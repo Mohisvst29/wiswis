@@ -1050,17 +1050,15 @@ html[dir="rtl"] .form-group label {
     }
     .about-features {
         padding: 0;
-        display: inline-flex;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        width: 100%;
+        align-items: center;
         margin: 0 auto 2.5rem auto;
-        transform: translateX(30px);
-    }
-    html[dir="ltr"] .about-features {
-        transform: translateX(-30px);
     }
     .about-features li {
-        justify-content: flex-start;
+        width: 100%;
+        justify-content: center;
     }
     .floating-badge {
         width: 100px;
