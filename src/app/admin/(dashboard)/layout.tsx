@@ -28,21 +28,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div dir="rtl" className="flex h-screen bg-[#F9FAFB] text-slate-900 font-sans overflow-hidden">
+    <div dir="rtl" className="flex h-screen bg-[#F0F2F5] text-slate-900 font-sans overflow-hidden">
       {/* Sidebar Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-slate-900/50 z-40 md:hidden" onClick={() => setSidebarOpen(false)}></div>
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 right-0 z-50 w-64 bg-white border-l border-slate-200 transition-transform duration-300 ease-in-out flex flex-col shadow-sm ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 md:static`}>
-        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-200">
-          <span className="text-xl font-bold text-slate-900">وسوس - لوحة الإدارة</span>
-          <button className="md:hidden text-slate-500 hover:text-slate-900" onClick={() => setSidebarOpen(false)}>
-            <X size={20} />
-          </button>
+      <aside className={`fixed inset-y-0 right-0 z-50 w-[260px] bg-[#2271B1] text-white transition-transform duration-300 ease-in-out flex flex-col shadow-xl md:shadow-none ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 md:static`}>
+        <div className="flex items-center justify-between h-[72px] px-6">
+          <div className="flex items-center gap-3">
+            <Menu size={24} className="text-white/80 cursor-pointer md:hidden" onClick={() => setSidebarOpen(false)} />
+            <span className="text-xl font-medium tracking-wide">Menu</span>
+          </div>
         </div>
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
+        <nav className="flex-1 overflow-y-auto py-2 custom-scrollbar space-y-0.5">
           {menuItems.map((item) => {
             const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
             return (
@@ -50,43 +50,38 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={item.name} 
                 href={item.href} 
                 onClick={() => setSidebarOpen(false)} 
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors border-r-4 ${isActive ? 'bg-[#7A0C16]/10 text-[#7A0C16] border-[#7A0C16]' : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-[#7A0C16]'}`}
+                className={`flex items-center gap-4 px-6 py-3.5 text-[15px] transition-colors relative ${isActive ? 'bg-[#135E96] font-medium text-white' : 'text-white/80 hover:bg-[#1A68A2] hover:text-white'}`}
               >
-                <item.icon size={18} className={isActive ? 'text-[#7A0C16]' : 'text-slate-500'} />
+                <item.icon size={20} className={isActive ? 'text-white' : 'text-white/70'} />
                 {item.name}
+                {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white"></div>}
               </Link>
             );
           })}
         </nav>
-        <div className="p-4 border-t border-slate-200">
-          <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors">
-            <LogOut size={18} />
+        <div className="p-4">
+          <button onClick={handleLogout} className="flex items-center gap-4 w-full px-4 py-3.5 text-[15px] text-white/80 hover:bg-[#1A68A2] hover:text-white transition-colors rounded-none">
+            <LogOut size={20} className="text-white/70" />
             تسجيل الخروج
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Topbar */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10 sticky top-0 shadow-sm">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F0F2F5]">
+        {/* Mobile Topbar Only */}
+        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10 sticky top-0 shadow-sm md:hidden">
           <div className="flex items-center gap-4">
-            <button className="md:hidden text-slate-500 hover:text-slate-900 p-2 -mr-2 rounded-lg hover:bg-slate-50" onClick={() => setSidebarOpen(true)}>
+            <button className="text-slate-500 hover:text-slate-900 p-2 -mr-2 rounded-lg hover:bg-slate-50" onClick={() => setSidebarOpen(true)}>
               <Menu size={20} />
             </button>
-            <h1 className="text-lg font-bold text-slate-900 hidden sm:block">لوحة التحكم (Admin Panel)</h1>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 font-bold text-sm">
-              W
-            </div>
+            <h1 className="text-lg font-bold text-slate-900">وسوس لخدمات الوقود</h1>
           </div>
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
-          <div className="max-w-5xl mx-auto space-y-8">
+        <main className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
+          <div className="max-w-6xl mx-auto space-y-8">
             {children}
           </div>
         </main>

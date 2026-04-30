@@ -1,9 +1,9 @@
 @import "tailwindcss";
-@source "../../../src/app/admin";
-@source "../../../src/components";
+@source "../../../";
+
 @layer base {
-  /* Prevent preflight from destroying frontend if leaked */
   body {
     margin: 0;
+    background-color: #f1f5f9; /* Soft background */
   }
 }
