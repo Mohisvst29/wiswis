@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   // Fetch logoUrl from the API to use as favicon
   let logoUrl = '/favicon.ico';
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.wiswistrading.com';
+    const baseUrl = 'https://www.wiswistrading.com';
     const res = await fetch(`${baseUrl}/api/settings`, { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
