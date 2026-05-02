@@ -21,7 +21,7 @@ export default function Branches() {
         // Extract unique regions (cityAr / cityEn)
         const uniqueRegions = Array.from(new Set(activeBranches.map((b: any) => lang === 'ar' ? b.cityAr : b.cityEn))) as string[];
         setRegions(uniqueRegions);
-        if (activeBranches.length > 0) setActiveBranchId(activeBranches[0]._id);
+        // Do not set activeBranchId initially so the map shows all branches
       }
     }).catch(() => {});
   }, [lang]);
@@ -40,7 +40,7 @@ export default function Branches() {
       {/* Regions Tabs */}
       <div className="filter-group" style={{ justifyContent: 'center' }}>
         <button 
-          onClick={() => setActiveRegion('all')}
+          onClick={() => { setActiveRegion('all'); setActiveBranchId(null); }}
           className={`filter-btn ${activeRegion === 'all' ? 'active' : ''}`}
         >
           {lang === 'ar' ? 'جميع المناطق' : 'All Regions'}
@@ -48,7 +48,7 @@ export default function Branches() {
         {regions.map((region, i) => (
           <button 
             key={i}
-            onClick={() => setActiveRegion(region)}
+            onClick={() => { setActiveRegion(region); setActiveBranchId(null); }}
             className={`filter-btn ${activeRegion === region ? 'active' : ''}`}
           >
             {region}
