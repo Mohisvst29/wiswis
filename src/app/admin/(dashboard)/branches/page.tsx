@@ -28,7 +28,7 @@ export default function BranchesPage() {
       if (res.ok) {
         const data = await res.json();
         if (data.lat && data.lng) {
-          setFormData(prev => ({ ...prev, mapUrl: url, lat: data.lat, lng: data.lng }));
+          setFormData((prev: any) => ({ ...prev, mapUrl: url, lat: data.lat, lng: data.lng }));
         }
       }
     } catch (err) {
