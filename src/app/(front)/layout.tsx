@@ -4,39 +4,63 @@ import { LangProvider } from "@/components/LangProvider";
 import DynamicStyles from "@/components/DynamicStyles";
 import FloatingActions from "@/components/FloatingActions";
 
-export const metadata: Metadata = {
-  title: "شركة وسوس للتجارة | Wiswis Trading Company",
-  description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية. Wiswis Trading Company - Integrated trading and services in Saudi Arabia.",
-  keywords: ["وسوس", "شركة وسوس للتجارة", "تجارة", "خدمات", "السعودية", "Wiswis", "trading", "company", "Saudi Arabia"],
-  authors: [{ name: "Wiswis Trading Company" }],
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  // Fetch logoUrl from the API to use as favicon
+  let logoUrl = '/favicon.ico';
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wiswis.vercel.app';
+    const res = await fetch(`${baseUrl}/api/settings`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.logoUrl) {
+        logoUrl = data.logoUrl;
+      }
+    }
+  } catch (error) {
+    console.error("Failed to fetch logo for metadata", error);
+  }
+
+  return {
     title: "شركة وسوس للتجارة | Wiswis Trading Company",
-    description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية",
-    type: "website",
-    locale: "ar_SA",
-    alternateLocale: "en_US",
-    siteName: "Wiswis Trading Company",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "شركة وسوس للتجارة | Wiswis Trading Company",
-    description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية. Wiswis Trading Company - Integrated trading and services in Saudi Arabia.",
+    keywords: ["وسوس", "شركة وسوس للتجارة", "تجارة", "خدمات", "السعودية", "Wiswis", "trading", "company", "Saudi Arabia"],
+    authors: [{ name: "Wiswis Trading Company" }],
+    icons: {
+      icon: logoUrl,
+      apple: logoUrl,
+      shortcut: logoUrl,
+    },
+    openGraph: {
+      title: "شركة وسوس للتجارة | Wiswis Trading Company",
+      description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية",
+      type: "website",
+      locale: "ar_SA",
+      alternateLocale: "en_US",
+      siteName: "Wiswis Trading Company",
+      images: [logoUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "شركة وسوس للتجارة | Wiswis Trading Company",
+      description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية",
+      images: [logoUrl],
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  alternates: {
-    canonical: '/',
-  },
-};
+    alternates: {
+      canonical: '/',
+    },
+  };
+}
 
 export const viewport = {
   width: 'device-width',
