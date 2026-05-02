@@ -5,7 +5,7 @@ import { useLang } from '@/components/LangProvider';
 export default function Footer() {
   const { t, lang } = useLang();
   const [logo, setLogo] = useState('');
-  const [siteName, setSiteName] = useState('Wiswis');
+  const [siteName, setSiteName] = useState(lang === 'ar' ? 'شركة وسوس للتجارة' : 'Wiswis Trading Company');
 
   const [socials, setSocials] = useState<any>({});
 

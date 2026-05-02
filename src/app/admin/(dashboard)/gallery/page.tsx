@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ImageIcon, Plus, Trash2, GripVertical, Save, X } from "lucide-react";
+import { ImageIcon, Plus, Trash2, Save, X } from "lucide-react";
 
 interface GalleryItem {
   _id: string;
@@ -13,6 +13,7 @@ export default function GalleryAdminPage() {
   const [images, setImages] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCaption, setEditCaption] = useState({ ar: '', en: '' });
@@ -20,12 +21,17 @@ export default function GalleryAdminPage() {
   const [newFile, setNewFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
   const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const fetchImages = async () => {
     setLoading(true);
-    const res = await fetch('/api/gallery');
-    const data = await res.json();
-    setImages(data);
+    try {
+      const res = await fetch('/api/gallery');
+      const data = await res.json();
+      if (Array.isArray(data)) setImages(data);
+    } catch (err) {
+      console.error('Failed to fetch gallery:', err);
+    }
     setLoading(false);
   };
 
@@ -34,71 +40,133 @@ export default function GalleryAdminPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Check file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setErrorMsg('حجم الملف كبير جداً. الحد الأقصى 10 ميجابايت');
+        return;
+      }
       setNewFile(file);
       setPreview(URL.createObjectURL(file));
+      setErrorMsg('');
     }
+  };
+
+  const uploadSingleFile = async (file: File): Promise<string | null> => {
+    // Check file size
+    if (file.size > 10 * 1024 * 1024) {
+      return null;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const uploadRes = await fetch('/api/upload', { 
+      method: 'POST', 
+      body: formData 
+    });
+    
+    if (!uploadRes.ok) {
+      const errorData = await uploadRes.json().catch(() => ({}));
+      throw new Error(errorData.error || `خطأ في الرفع: ${uploadRes.status}`);
+    }
+    
+    const uploadData = await uploadRes.json();
+    return uploadData.url || null;
   };
 
   const handleUpload = async () => {
     if (!newFile) return;
     setUploading(true);
+    setErrorMsg('');
     try {
-      // Upload to cloudinary first
-      const formData = new FormData();
-      formData.append('file', newFile);
-      const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
-      const uploadData = await uploadRes.json();
+      setUploadProgress('جاري رفع الصورة...');
+      const url = await uploadSingleFile(newFile);
 
-      if (uploadData.url) {
-        // Save to gallery
-        await fetch('/api/gallery', {
+      if (url) {
+        setUploadProgress('جاري حفظ البيانات...');
+        const saveRes = await fetch('/api/gallery', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            url: uploadData.url,
+            url,
             caption: newCaption,
             order: images.length
           })
         });
+        
+        if (!saveRes.ok) {
+          throw new Error('فشل في حفظ الصورة في المعرض');
+        }
+        
         setShowAddModal(false);
         setNewFile(null);
         setPreview('');
         setNewCaption({ ar: '', en: '' });
         fetchImages();
+      } else {
+        setErrorMsg('فشل في رفع الصورة. تأكد من حجم الملف وصيغته.');
       }
-    } catch (err) {
-      alert('حدث خطأ أثناء الرفع');
+    } catch (err: any) {
+      setErrorMsg(err.message || 'حدث خطأ أثناء الرفع');
     }
     setUploading(false);
+    setUploadProgress('');
   };
 
   const handleMultiUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     setUploading(true);
+    setErrorMsg('');
+    
+    let successCount = 0;
+    let failCount = 0;
+    
     try {
       for (let i = 0; i < files.length; i++) {
-        const formData = new FormData();
-        formData.append('file', files[i]);
-        const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
-        const uploadData = await uploadRes.json();
-        if (uploadData.url) {
-          await fetch('/api/gallery', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              url: uploadData.url,
-              caption: { ar: '', en: '' },
-              order: images.length + i
-            })
-          });
+        setUploadProgress(`جاري رفع الصورة ${i + 1} من ${files.length}...`);
+        
+        try {
+          // Check file size
+          if (files[i].size > 10 * 1024 * 1024) {
+            failCount++;
+            continue;
+          }
+          
+          const url = await uploadSingleFile(files[i]);
+          
+          if (url) {
+            await fetch('/api/gallery', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                url,
+                caption: { ar: '', en: '' },
+                order: images.length + i
+              })
+            });
+            successCount++;
+          } else {
+            failCount++;
+          }
+        } catch (fileErr) {
+          failCount++;
+          console.error(`Failed to upload file ${i + 1}:`, fileErr);
         }
       }
+      
+      if (failCount > 0 && successCount === 0) {
+        setErrorMsg(`فشل رفع جميع الصور (${failCount}). تأكد من حجم الملفات والاتصال.`);
+      } else if (failCount > 0) {
+        setErrorMsg(`تم رفع ${successCount} صور بنجاح، وفشلت ${failCount} صور.`);
+      }
+      
       fetchImages();
-    } catch (err) {
-      alert('حدث خطأ أثناء الرفع');
+    } catch (err: any) {
+      setErrorMsg(err.message || 'حدث خطأ أثناء الرفع');
     }
     setUploading(false);
+    setUploadProgress('');
     e.target.value = '';
   };
 
@@ -132,21 +200,24 @@ export default function GalleryAdminPage() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               background: '#f3f4f6', color: '#374151', padding: '0.6rem 1.2rem',
-              borderRadius: '12px', fontWeight: '600', fontSize: '0.9rem', cursor: 'pointer',
-              border: '1px solid #e5e7eb', transition: 'all 0.2s'
+              borderRadius: '12px', fontWeight: '600', fontSize: '0.9rem', cursor: uploading ? 'not-allowed' : 'pointer',
+              border: '1px solid #e5e7eb', transition: 'all 0.2s',
+              opacity: uploading ? 0.5 : 1
             }}
           >
             <Plus size={18} />
             رفع عدة صور
-            <input type="file" multiple accept="image/*" onChange={handleMultiUpload} style={{ display: 'none' }} />
+            <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif" onChange={handleMultiUpload} style={{ display: 'none' }} disabled={uploading} />
           </label>
           <button
-            onClick={() => setShowAddModal(true)}
+            onClick={() => { setShowAddModal(true); setErrorMsg(''); }}
+            disabled={uploading}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               background: 'linear-gradient(135deg, #D4A017, #8f6c00)', color: 'white',
               padding: '0.6rem 1.2rem', borderRadius: '12px', fontWeight: '600',
-              fontSize: '0.9rem', cursor: 'pointer', border: 'none', transition: 'all 0.2s'
+              fontSize: '0.9rem', cursor: uploading ? 'not-allowed' : 'pointer', border: 'none', transition: 'all 0.2s',
+              opacity: uploading ? 0.5 : 1
             }}
           >
             <Plus size={18} />
@@ -166,7 +237,18 @@ export default function GalleryAdminPage() {
             borderTopColor: 'transparent', borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
-          جاري رفع الصور... يرجى الانتظار
+          {uploadProgress || 'جاري رفع الصور... يرجى الانتظار'}
+        </div>
+      )}
+
+      {errorMsg && !uploading && (
+        <div style={{
+          background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '12px',
+          padding: '1rem 1.5rem', marginBottom: '1.5rem', color: '#991B1B',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: '500'
+        }}>
+          <span>{errorMsg}</span>
+          <button onClick={() => setErrorMsg('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#991B1B', fontWeight: 'bold', fontSize: '1.2rem' }}>×</button>
         </div>
       )}
 
@@ -292,7 +374,7 @@ export default function GalleryAdminPage() {
           position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           zIndex: 9999, backdropFilter: 'blur(4px)'
-        }} onClick={() => setShowAddModal(false)}>
+        }} onClick={() => { if (!uploading) { setShowAddModal(false); setErrorMsg(''); } }}>
           <div
             onClick={e => e.stopPropagation()}
             style={{
@@ -301,6 +383,15 @@ export default function GalleryAdminPage() {
             }}
           >
             <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>إضافة صورة جديدة</h2>
+
+            {errorMsg && (
+              <div style={{
+                background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '10px',
+                padding: '0.75rem 1rem', marginBottom: '1rem', color: '#991B1B', fontSize: '0.85rem'
+              }}>
+                {errorMsg}
+              </div>
+            )}
 
             <div style={{
               border: '2px dashed #e5e7eb', borderRadius: '12px', padding: '2rem',
@@ -313,9 +404,10 @@ export default function GalleryAdminPage() {
                 <>
                   <ImageIcon size={36} style={{ color: '#d1d5db', margin: '0 auto 0.5rem' }} />
                   <p style={{ color: '#6b7280' }}>اضغط لاختيار صورة</p>
+                  <p style={{ color: '#9ca3af', fontSize: '0.8rem', marginTop: '0.25rem' }}>JPG, PNG, WebP (الحد الأقصى 10MB)</p>
                 </>
               )}
-              <input id="gallery-file-input" type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
+              <input id="gallery-file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={handleFileChange} style={{ display: 'none' }} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
@@ -358,14 +450,15 @@ export default function GalleryAdminPage() {
                   cursor: !newFile ? 'not-allowed' : 'pointer'
                 }}
               >
-                {uploading ? 'جاري الرفع...' : 'رفع الصورة'}
+                {uploading ? uploadProgress || 'جاري الرفع...' : 'رفع الصورة'}
               </button>
               <button
-                onClick={() => { setShowAddModal(false); setNewFile(null); setPreview(''); setNewCaption({ ar: '', en: '' }); }}
+                onClick={() => { setShowAddModal(false); setNewFile(null); setPreview(''); setNewCaption({ ar: '', en: '' }); setErrorMsg(''); }}
+                disabled={uploading}
                 style={{
                   background: '#f3f4f6', color: '#6b7280', border: '1px solid #e5e7eb',
                   borderRadius: '12px', padding: '0.75rem 1.5rem', fontWeight: '600',
-                  fontSize: '0.95rem', cursor: 'pointer'
+                  fontSize: '0.95rem', cursor: uploading ? 'not-allowed' : 'pointer'
                 }}
               >
                 إلغاء
