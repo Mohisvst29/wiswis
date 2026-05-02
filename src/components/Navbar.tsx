@@ -81,6 +81,7 @@ export default function Navbar() {
           <a href="#services" onClick={() => setMenuOpen(false)}>{t('nav_services')}</a>
           <a href="#branches" onClick={() => setMenuOpen(false)}>{t('nav_branches')}</a>
           <a href="#news" onClick={() => setMenuOpen(false)}>{t('nav_news')}</a>
+          <a href="#gallery" onClick={() => setMenuOpen(false)}>{t('gallery_title')}</a>
           <a href="#contact" onClick={() => { setMenuOpen(false); window.dispatchEvent(new CustomEvent('openContactModal')); }}>{t('nav_contact')}</a>
         </nav>
         

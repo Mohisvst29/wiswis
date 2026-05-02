@@ -8,7 +8,7 @@ const translations = {
         nav_contact: "Contact",
         
         hero_title: "Towards a Limitless Journey",
-        hero_sub: "Integrated fuel and roadside services with global standards",
+        hero_sub: "Integrated trading and services with global standards",
         btn_explore: "Explore Services",
         btn_contact: "Contact Us",
         
@@ -20,7 +20,7 @@ const translations = {
         badge_text: "Years of Excellence",
         about_sub: "Who We Are",
         about_title: "Redefining Energy & Road Services",
-        about_text: "Wiswis is a premium national brand committed to providing top-tier fuel and roadside services. With an industrial-grade infrastructure and a focus on luxury customer experience, we ensure every journey is smooth, safe, and fully energized.",
+        about_text: "Wiswis is a premium national trading brand committed to providing top-tier services. With an advanced infrastructure and a focus on luxury customer experience, we ensure every journey is smooth, safe, and fully energized.",
         feat_1: "Premium Fuel Quality",
         feat_2: "Advanced Maintenance",
         feat_3: "24/7 Availability",
@@ -71,9 +71,11 @@ const translations = {
         form_message: "Message",
         btn_send: "Send Message",
         
-        footer_desc: "Premium fuel and road services across the nation.",
+        footer_desc: "Premium trading and services across the nation.",
         footer_links: "Quick Links",
-        footer_social: "Connect"
+        footer_social: "Connect",
+        gallery_sub: "Our Gallery",
+        gallery_title: "Photo Gallery"
     },
     ar: {
         nav_about: "من نحن",
@@ -83,7 +85,7 @@ const translations = {
         nav_contact: "تواصل معنا",
         
         hero_title: "نحو رحلة بلا حدود",
-        hero_sub: "حلول متكاملة لخدمات الوقود والطريق بمعايير عالمية",
+        hero_sub: "حلول متكاملة للتجارة والخدمات بمعايير عالمية",
         btn_explore: "استكشف الخدمات",
         btn_contact: "تواصل معنا",
         
@@ -95,7 +97,7 @@ const translations = {
         badge_text: "سنوات من التميز",
         about_sub: "من نحن",
         about_title: "نعيد تعريف خدمات الطاقة والطريق",
-        about_text: "وسوس هي علامة تجارية وطنية رائدة ملتزمة بتقديم خدمات الوقود والطريق بأعلى المعايير. بفضل البنية التحتية الصناعية المتقدمة والتركيز على تجربة العملاء الفاخرة، نضمن أن تكون كل رحلة سلسة وآمنة ومليئة بالطاقة.",
+        about_text: "وسوس هي علامة تجارية وطنية رائدة ملتزمة بتقديم أفضل الخدمات بأعلى المعايير. بفضل البنية التحتية المتقدمة والتركيز على تجربة العملاء الفاخرة، نضمن أن تكون كل رحلة سلسة وآمنة ومليئة بالطاقة.",
         feat_1: "جودة وقود فائقة",
         feat_2: "صيانة متقدمة",
         feat_3: "متاحون على مدار الساعة",
@@ -146,9 +148,11 @@ const translations = {
         form_message: "الرسالة",
         btn_send: "إرسال الرسالة",
         
-        footer_desc: "خدمات وقود وطريق فاخرة عبر أنحاء الوطن.",
+        footer_desc: "خدمات تجارية فاخرة عبر أنحاء الوطن.",
         footer_links: "روابط سريعة",
-        footer_social: "تواصل معنا"
+        footer_social: "تواصل معنا",
+        gallery_sub: "معرضنا",
+        gallery_title: "معرض الصور"
     }
 };
 

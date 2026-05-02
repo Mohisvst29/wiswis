@@ -47,7 +47,7 @@ export default function Stats() {
         </div>
         <div className="stat-separator"></div>
         <div className="stat-item">
-          <span className="stat-number" data-target="150">0</span><span className="stat-plus">+</span>
+          <span className="stat-number" data-target="20">0</span><span className="stat-plus">+</span>
           <p className="stat-label">{t('stat_branches')}</p>
         </div>
         <div className="stat-separator"></div>

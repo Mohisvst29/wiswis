@@ -7,6 +7,7 @@ import About from '@/components/About';
 import Services from '@/components/Services';
 import Branches from '@/components/Branches';
 import News from '@/components/News';
+import Gallery from '@/components/Gallery';
 import Partners from '@/components/Partners';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -41,6 +42,7 @@ export default function Home() {
       <Services />
       <Branches />
       <News />
+      <Gallery />
       <Partners />
       <Contact />
       <Footer />

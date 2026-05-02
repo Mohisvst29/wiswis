@@ -5,22 +5,22 @@ import DynamicStyles from "@/components/DynamicStyles";
 import FloatingActions from "@/components/FloatingActions";
 
 export const metadata: Metadata = {
-  title: "وسوس لخدمات الوقود | Wiswis Petroleum Services",
-  description: "وسوس لخدمات الوقود - حلول متكاملة لمحطات الوقود وخدمات الطريق بمعايير عالمية. محطات وقود، غسيل سيارات، سوبر ماركت، صيانة، ومقاهي متخصصة في المملكة العربية السعودية. Wiswis Petroleum - Integrated fuel stations and roadside services in Saudi Arabia.",
-  keywords: ["وسوس", "محطات وقود", "خدمات الوقود", "وقود", "غسيل سيارات", "سوبر ماركت", "صيانة سيارات", "محطات بنزين", "السعودية", "Wiswis", "petroleum", "fuel stations", "car wash", "Saudi Arabia"],
-  authors: [{ name: "Wiswis Petroleum Services" }],
+  title: "شركة وسوس للتجارة | Wiswis Trading Company",
+  description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية. Wiswis Trading Company - Integrated trading and services in Saudi Arabia.",
+  keywords: ["وسوس", "شركة وسوس للتجارة", "تجارة", "خدمات", "السعودية", "Wiswis", "trading", "company", "Saudi Arabia"],
+  authors: [{ name: "Wiswis Trading Company" }],
   openGraph: {
-    title: "وسوس لخدمات الوقود | Wiswis Petroleum Services",
-    description: "حلول متكاملة لمحطات الوقود وخدمات الطريق بمعايير عالمية في المملكة العربية السعودية",
+    title: "شركة وسوس للتجارة | Wiswis Trading Company",
+    description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية",
     type: "website",
     locale: "ar_SA",
     alternateLocale: "en_US",
-    siteName: "Wiswis Petroleum",
+    siteName: "Wiswis Trading Company",
   },
   twitter: {
     card: "summary_large_image",
-    title: "وسوس لخدمات الوقود | Wiswis Petroleum Services",
-    description: "حلول متكاملة لمحطات الوقود وخدمات الطريق بمعايير عالمية",
+    title: "شركة وسوس للتجارة | Wiswis Trading Company",
+    description: "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية",
   },
   robots: {
     index: true,
@@ -71,9 +71,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "وسوس لخدمات الوقود",
-              "alternateName": "Wiswis Petroleum Services",
-              "description": "حلول متكاملة لمحطات الوقود وخدمات الطريق بمعايير عالمية في المملكة العربية السعودية",
+              "name": "شركة وسوس للتجارة",
+              "alternateName": "Wiswis Trading Company",
+              "description": "شركة وسوس للتجارة - حلول متكاملة للتجارة والخدمات بمعايير عالمية في المملكة العربية السعودية",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+966554460672",

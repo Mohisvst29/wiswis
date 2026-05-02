@@ -58,6 +58,15 @@ const MediaSchema = new mongoose.Schema({
   resourceType: { type: String }
 }, { timestamps: true });
 
+const GalleryImageSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  caption: {
+    ar: { type: String, default: '' },
+    en: { type: String, default: '' }
+  },
+  order: { type: Number, default: 0 }
+}, { timestamps: true });
+
 export const Service = mongoose.models.Service || mongoose.model('Service', ServiceSchema);
 export const Branch = mongoose.models.Branch || mongoose.model('Branch', BranchSchema);
 export const News = mongoose.models.News || mongoose.model('News', NewsSchema);
@@ -65,3 +74,5 @@ export const Partner = mongoose.models.Partner || mongoose.model('Partner', Part
 export const ContactMessage = mongoose.models.ContactMessage || mongoose.model('ContactMessage', ContactMessageSchema);
 export const Settings = mongoose.models.Settings || mongoose.model('Settings', SettingsSchema);
 export const Media = mongoose.models.Media || mongoose.model('Media', MediaSchema);
+export const GalleryImage = mongoose.models.GalleryImage || mongoose.model('GalleryImage', GalleryImageSchema);
+

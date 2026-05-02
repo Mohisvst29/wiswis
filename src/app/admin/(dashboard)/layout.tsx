@@ -23,6 +23,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "المحطات والفروع", href: "/admin/branches", icon: MapPin },
     { name: "الأخبار والمقالات", href: "/admin/news", icon: FileText },
     { name: "شركاء النجاح", href: "/admin/partners", icon: Users },
+    { name: "معرض الصور", href: "/admin/gallery", icon: ImageIcon },
     { name: "صندوق الرسائل", href: "/admin/messages", icon: MessageSquare },
   ];
 
@@ -36,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 right-0 z-50 w-[240px] bg-white border-l border-gray-200 transition-transform duration-300 ease-in-out flex flex-col md:static ${sidebarOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0`}>
         <div className="flex items-center justify-center h-[64px] border-b border-gray-200">
-          <span className="text-xl font-bold tracking-tight text-gray-900">وسوس لخدمات الوقود</span>
+          <span className="text-xl font-bold tracking-tight text-gray-900">شركة وسوس للتجارة</span>
           <button className="md:hidden absolute left-4 text-gray-500 hover:text-gray-900" onClick={() => setSidebarOpen(false)}>
             <X size={20} />
           </button>

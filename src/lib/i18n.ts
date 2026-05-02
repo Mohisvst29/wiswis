@@ -74,11 +74,15 @@ const translations = {
     "contact.location": "الموقع",
 
     // Footer
-    "footer.description": "شركة متخصصة في خدمات الوقود والخدمات المساندة على الطرق في المملكة العربية السعودية.",
+    "footer.description": "شركة وسوس للتجارة - خدمات تجارية متكاملة في المملكة العربية السعودية.",
     "footer.quickLinks": "روابط سريعة",
     "footer.contactInfo": "معلومات التواصل",
     "footer.rights": "جميع الحقوق محفوظة",
     "footer.followUs": "تابعنا",
+
+    // Gallery
+    "gallery.title": "معرض الصور",
+    "gallery.subtitle": "استعرض أبرز صورنا ولحظاتنا",
 
     // Common
     "common.loading": "جاري التحميل...",
@@ -142,11 +146,15 @@ const translations = {
     "contact.location": "Location",
 
     // Footer
-    "footer.description": "A specialized company in fuel services and roadside assistance in Saudi Arabia.",
+    "footer.description": "Wiswis Trading Company - Integrated trading and services in Saudi Arabia.",
     "footer.quickLinks": "Quick Links",
     "footer.contactInfo": "Contact Info",
     "footer.rights": "All rights reserved",
     "footer.followUs": "Follow Us",
+
+    // Gallery
+    "gallery.title": "Photo Gallery",
+    "gallery.subtitle": "Explore our featured photos and moments",
 
     // Common
     "common.loading": "Loading...",
