@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useLang } from '@/components/LangProvider';
 
 interface GalleryImage {
@@ -14,6 +14,7 @@ export default function Gallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     fetch('/api/gallery')
@@ -23,6 +24,28 @@ export default function Gallery() {
       })
       .catch(() => {});
   }, []);
+
+  // Register own IntersectionObserver after images load
+  useEffect(() => {
+    if (images.length === 0 || !sectionRef.current) return;
+
+    const revealElements = sectionRef.current.querySelectorAll('.reveal-scroll');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [images]);
 
   const openLightbox = useCallback((index: number) => {
     setLightbox(index);
@@ -61,7 +84,7 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="gallery" id="gallery">
+      <section className="gallery" id="gallery" ref={sectionRef}>
         <div className="section-header reveal-scroll">
           <h4 className="section-subtitle">{t('gallery_sub')}</h4>
           <h2 className="section-title">{t('gallery_title')}</h2>
@@ -150,3 +173,4 @@ export default function Gallery() {
     </>
   );
 }
+
