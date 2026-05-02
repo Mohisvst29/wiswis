@@ -8,7 +8,7 @@ export default function BranchesPage() {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', isActive: true });
+  const [formData, setFormData] = useState<any>({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', lat: '', lng: '', isActive: true });
 
   useEffect(() => { fetchBranches(); }, []);
   const fetchBranches = async () => { const res = await fetch('/api/branches'); setBranches(await res.json() || []); };
@@ -18,6 +18,14 @@ export default function BranchesPage() {
     setLoading(true);
     try {
       const { _id, __v, createdAt, updatedAt, ...payload } = formData as any;
+      
+      // Ensure lat and lng are numbers or null
+      if (payload.lat === '') payload.lat = null;
+      else if (payload.lat !== null) payload.lat = Number(payload.lat);
+      
+      if (payload.lng === '') payload.lng = null;
+      else if (payload.lng !== null) payload.lng = Number(payload.lng);
+
       const res = await fetch(editingId ? `/api/branches/${editingId}` : '/api/branches', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error();
       setIsModalOpen(false); fetchBranches();
@@ -30,7 +38,7 @@ export default function BranchesPage() {
   const handleDelete = async (id: string) => { if (confirm('حذف؟')) { await fetch(`/api/branches/${id}`, { method: 'DELETE' }); fetchBranches(); } };
 
   return (
-    <PageWrapper title="المحطات (Branches)" actionButton={<Button onClick={() => { setEditingId(null); setFormData({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', isActive: true }); setIsModalOpen(true); }}><Plus size={16}/> أضف محطة</Button>}>
+    <PageWrapper title="المحطات (Branches)" actionButton={<Button onClick={() => { setEditingId(null); setFormData({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', lat: '', lng: '', isActive: true }); setIsModalOpen(true); }}><Plus size={16}/> أضف محطة</Button>}>
       <SectionCard title="فروع ومحطات الخدمة">
         {/* Desktop Table */}
         <div className="hidden md:block">
@@ -43,7 +51,10 @@ export default function BranchesPage() {
                 <tr key={br._id} className="hover:bg-slate-50/50">
                   <td className="px-6 py-4"><div className="font-semibold text-slate-900">{br.nameAr}</div><div className="text-slate-500 text-xs" dir="ltr">{br.nameEn}</div></td>
                   <td className="px-6 py-4">{br.cityAr}</td>
-                  <td className="px-6 py-4">{br.mapUrl ? <a href={br.mapUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-600 flex items-center gap-1 hover:underline"><MapPin size={14}/> عرض <ExternalLink size={12}/></a> : '-'}</td>
+                  <td className="px-6 py-4">
+                    {br.mapUrl ? <a href={br.mapUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-600 flex items-center gap-1 hover:underline"><MapPin size={14}/> عرض <ExternalLink size={12}/></a> : '-'}
+                    {(br.lat || br.lng) && <div className="text-xs text-slate-400 mt-1" dir="ltr">{br.lat}, {br.lng}</div>}
+                  </td>
                   <td className="px-6 py-4 text-left">
                     <div className="flex items-center justify-end gap-2">
                       <button onClick={() => { setEditingId(br._id); setFormData(br); setIsModalOpen(true); }} className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500"><Edit2 size={16}/></button>
@@ -98,8 +109,22 @@ export default function BranchesPage() {
                 
                 <FormField label="رابط الموقع (Google Maps Link)">
                   <Input dir="ltr" placeholder="https://maps.google.com/..." value={formData.mapUrl} onChange={e=>setFormData({...formData, mapUrl:e.target.value})} />
-                  <p className="text-xs text-slate-400 mt-1">افتح Google Maps → اضغط مشاركة → انسخ الرابط والصقه هنا</p>
                 </FormField>
+                
+                <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                  <h4 className="text-sm font-bold text-blue-900 mb-3">إحداثيات الخريطة (لكي تظهر المحطة في الخريطة بالموقع)</h4>
+                  <FormGrid>
+                    <FormField label="خط العرض (Latitude)">
+                      <Input dir="ltr" type="number" step="any" placeholder="مثال: 24.7136" value={formData.lat === null ? '' : formData.lat} onChange={e=>setFormData({...formData, lat: e.target.value})} />
+                    </FormField>
+                    <FormField label="خط الطول (Longitude)">
+                      <Input dir="ltr" type="number" step="any" placeholder="مثال: 46.6753" value={formData.lng === null ? '' : formData.lng} onChange={e=>setFormData({...formData, lng: e.target.value})} />
+                    </FormField>
+                  </FormGrid>
+                  <p className="text-xs text-blue-600 mt-2">
+                    يمكنك الحصول على الإحداثيات من جوجل ماب بالضغط بزر الماوس الأيمن على موقع المحطة ونسخ الرقمين (الأول هو خط العرض والثاني هو خط الطول).
+                  </p>
+                </div>
               </form>
             </div>
             <div className="p-4 sm:p-6 border-t bg-slate-50 flex justify-end gap-3"><Button variant="outline" onClick={()=>setIsModalOpen(false)}>إلغاء</Button><Button form="form" disabled={loading}>{loading?'جاري...':'حفظ'}</Button></div>
