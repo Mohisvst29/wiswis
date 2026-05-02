@@ -1,17 +1,41 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PageWrapper, SectionCard, FormGrid, FormField, Input, Button } from "@/components/ui/LayoutComponents";
-import { Plus, Edit2, Trash2, X, MapPin, ExternalLink } from "lucide-react";
+import { Plus, Edit2, Trash2, X, MapPin, ExternalLink, Loader2 } from "lucide-react";
 
 export default function BranchesPage() {
   const [branches, setBranches] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isExtracting, setIsExtracting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<any>({ nameEn: '', nameAr: '', descEn: '', descAr: '', cityEn: '', cityAr: '', mapUrl: '', lat: '', lng: '', isActive: true });
 
   useEffect(() => { fetchBranches(); }, []);
   const fetchBranches = async () => { const res = await fetch('/api/branches'); setBranches(await res.json() || []); };
+
+  const handleUrlPaste = async (url: string) => {
+    setFormData({ ...formData, mapUrl: url });
+    if (!url || !url.includes('http')) return;
+    
+    setIsExtracting(true);
+    try {
+      const res = await fetch('/api/extract-location', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.lat && data.lng) {
+          setFormData(prev => ({ ...prev, mapUrl: url, lat: data.lat, lng: data.lng }));
+        }
+      }
+    } catch (err) {
+      console.error("Failed to extract location", err);
+    }
+    setIsExtracting(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,7 +132,13 @@ export default function BranchesPage() {
                 </FormGrid>
                 
                 <FormField label="رابط الموقع (Google Maps Link)">
-                  <Input dir="ltr" placeholder="https://maps.google.com/..." value={formData.mapUrl} onChange={e=>setFormData({...formData, mapUrl:e.target.value})} />
+                  <div className="relative">
+                    <Input dir="ltr" placeholder="https://maps.google.com/..." value={formData.mapUrl} onChange={e => handleUrlPaste(e.target.value)} className={isExtracting ? 'opacity-70' : ''} />
+                    {isExtracting && <Loader2 className="absolute right-3 top-2.5 animate-spin text-slate-400" size={20} />}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {isExtracting ? 'جاري استخراج الإحداثيات تلقائياً...' : 'قم بلصق رابط جوجل ماب وسيقوم النظام باستخراج الإحداثيات تلقائياً.'}
+                  </p>
                 </FormField>
                 
                 <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
@@ -122,12 +152,12 @@ export default function BranchesPage() {
                     </FormField>
                   </FormGrid>
                   <p className="text-xs text-blue-600 mt-2">
-                    يمكنك الحصول على الإحداثيات من جوجل ماب بالضغط بزر الماوس الأيمن على موقع المحطة ونسخ الرقمين (الأول هو خط العرض والثاني هو خط الطول).
+                    الإحداثيات تُستخرج تلقائياً عند لصق الرابط في الأعلى. يمكنك تعديلها يدوياً إذا أردت.
                   </p>
                 </div>
               </form>
             </div>
-            <div className="p-4 sm:p-6 border-t bg-slate-50 flex justify-end gap-3"><Button variant="outline" onClick={()=>setIsModalOpen(false)}>إلغاء</Button><Button form="form" disabled={loading}>{loading?'جاري...':'حفظ'}</Button></div>
+            <div className="p-4 sm:p-6 border-t bg-slate-50 flex justify-end gap-3"><Button variant="outline" onClick={()=>setIsModalOpen(false)}>إلغاء</Button><Button form="form" disabled={loading || isExtracting}>{loading?'جاري...':'حفظ'}</Button></div>
           </div>
         </div>
       )}
